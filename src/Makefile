@@ -1,5 +1,5 @@
 TARGET := VITAident
-TITLE_ID := VID000016
+TITLE_ID := VID000162
 SOURCES := src
 
 PREFIX   = arm-vita-eabi
@@ -9,12 +9,13 @@ CFLAGS   = -Wl,-q -Wall -Werror -O3
 CXXFLAGS = $(CFLAGS) -std=c++11 -fno-rtti -fno-exceptions
 ASFLAGS  = $(CFLAGS)
 
-OBJS = app.o font.o fs.o graphics.o kernel.o main.o net.o power.o screenshot.o utils.o \
+OBJS = app.o fs.o kernel.o main.o net.o power.o screenshot.o utils.o \
 
 LIBDIR = libs
 LDFLAGS = 
-LIBS := -lSceAppMgr_stub -lSceAppUtil_stub -lSceCtrl_stub -lSceDisplay_stub -lSceKernel_stub \
-		-lSceNet_stub -lSceNetCtl_stub -lScePower_stub -lSceSysmodule_stub -lSceVshBridge_stub
+LIBS := -lSceAppMgr_stub -lSceAppUtil_stub -lSceCommonDialog_stub -lSceCtrl_stub -lSceDisplay_stub -lSceGxm_stub -lSceKernel_stub \
+		-lSceNet_stub -lSceNetCtl_stub -lScePgf_stub -lScePower_stub -lSceSysmodule_stub -lvita2d -lSceVshBridge_stub \
+		-lfreetype -lpng -ljpeg -lz -lm -lc
 
 all: $(TARGET).vpk
 

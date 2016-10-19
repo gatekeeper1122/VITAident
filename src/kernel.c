@@ -18,6 +18,20 @@ int getModel()
 	return sceKernelGetModelForCDialog();
 }
 
+char * getmCID()
+{
+	char mCID[32];
+	static char id[2 * 16] = {0};
+
+	_vshAppMgrCloudDataGetMcId(mCID);
+	
+	int i = 0;
+	for (i = 0; i < 16; i++)
+		snprintf(id + (i * 2), (2 * 16) - (i * 2) + 1, "%02X", mCID[i]);
+	
+	return id;
+}
+
 char * getCID()
 {
 	char CID[32];

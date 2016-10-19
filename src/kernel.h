@@ -17,6 +17,7 @@ typedef struct {
 int sceKernelGetSystemSwVersion(SceSystemSwVersionParam *param);
 
 int _vshSblAimgrGetConsoleId(char CID[32]);
+int _vshAppMgrCloudDataGetMcId(char mCID[32]);
 
 int vshSblAimgrIsCEX();
 int vshSblAimgrIsDEX();
@@ -30,6 +31,7 @@ int vshRemovableMemoryGetCardInsertState();
 
 char * getFwVersion();
 int getModel();
+char * getmCID();
 char * getCID();
 SceKernelOpenPsId getPSID();
 char * getUnit();
