@@ -1,3 +1,4 @@
+#include "fs.h"
 #include "kernel.h"
 
 char * getFwVersion()
@@ -13,23 +14,22 @@ char * getFwVersion()
 	return version;
 }
 
+char getHenkakuVersion()
+{
+	char henkakuVersion[10];
+	
+	SceSystemSwVersionParam param;
+	param.size = sizeof(SceSystemSwVersionParam);
+	sceKernelGetSystemSwVersion(&param);
+	
+	strcpy(henkakuVersion, (char *) param.version_string);
+	
+	return henkakuVersion[(strlen(henkakuVersion) - 1)];
+}
+
 int getModel()
 {
 	return sceKernelGetModelForCDialog();
-}
-
-char * getmCID()
-{
-	char mCID[32];
-	static char id[2 * 16] = {0};
-
-	_vshAppMgrCloudDataGetMcId(mCID);
-	
-	int i = 0;
-	for (i = 0; i < 16; i++)
-		snprintf(id + (i * 2), (2 * 16) - (i * 2) + 1, "%02X", mCID[i]);
-	
-	return id;
 }
 
 char * getCID()
@@ -47,6 +47,20 @@ char * getCID()
 	return idps;
 }
 
+char * getmCID()
+{
+	char mCID[32];
+	static char id[2 * 16] = {0};
+
+	_vshAppMgrCloudDataGetMcId(mCID);
+	
+	int i = 0;
+	for (i = 0; i < 16; i++)
+		snprintf(id + (i * 2), (2 * 16) - (i * 2) + 1, "%02X", mCID[i]);
+	
+	return id;
+}
+
 SceKernelOpenPsId getPSID()
 {
 	SceKernelOpenPsId id;
@@ -61,20 +75,34 @@ char * getUnit()
 		return "CEX unit";
 	else if ((vshSblAimgrIsGenuineVITA() | vshSblAimgrIsGenuineDolce()) && (vshSblAimgrIsCEX()) && (vshSysconIsIduMode()))
 		return "CEX | IDU unit";
+	else if ((vshSblAimgrIsTest()) && (vshSysconIsShowMode()))
+		return "Devkit | Show unit";
 	else if (vshSblAimgrIsTest())
-		return "Test unit";
+		return "Devkit";
 	else if (vshSblAimgrIsTool())
 		return "Debug tool";
 	else 
-		return "PS Vita TV";
+		return "PS Vita TV"; //Because it returns NULL running on a VITA TV
 }
 
-char * getDeviceType()
+const char * getDeviceModel()
 {
 	if(vshSblAimgrIsGenuineVITA())
-		return "PS Vita";
+		return getVitaModel();
 	else if(vshSblAimgrIsGenuineDolce())
-		return "PS Vita TV";
+		return "VTE-1000";
+	else
+		return "Uknown";
+}
+
+const char * getBoard()
+{
+	if (strcmp(getVitaModel(), "PCH-2000") == 0)
+		return "USS-1001";
+	else if (strcmp(getVitaModel(), "PCH-1000") == 0)
+		return "IRS-002";
+	else if(vshSblAimgrIsGenuineDolce())
+		return "DOL-1001";
 	else
 		return "Uknown";
 }

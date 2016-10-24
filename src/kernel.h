@@ -6,6 +6,7 @@
 #include <psp2/kernel/openpsid.h>
 
 #include <stdio.h>
+#include <string.h>
 
 typedef struct {
 	SceUInt size;
@@ -22,6 +23,7 @@ int _vshAppMgrCloudDataGetMcId(char mCID[32]);
 int vshSblAimgrIsCEX();
 int vshSblAimgrIsDEX();
 int vshSysconIsIduMode();
+int vshSysconIsShowMode();
 int vshSblAimgrIsGenuineVITA();
 int vshSblAimgrIsGenuineDolce();
 int vshSblAimgrIsTest();
@@ -30,11 +32,13 @@ int vshSblAimgrIsTool();
 int vshRemovableMemoryGetCardInsertState();
 
 char * getFwVersion();
+char getHenkakuVersion();
 int getModel();
-char * getmCID();
 char * getCID();
+char * getmCID();
 SceKernelOpenPsId getPSID();
 char * getUnit();
-char * getDeviceType();
+const char * getDeviceModel();
+const char * getBoard();
 
 #endif

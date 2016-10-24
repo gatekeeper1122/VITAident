@@ -21,12 +21,14 @@ int kernelMenu()
 		vita2d_pgf_draw_textf(font, 5, 525, RGBA8(93, 93, 93, 255), 1.0f, "< Misc menu (L)");
 		vita2d_pgf_draw_textf(font, 705, 525, RGBA8(93, 93, 93, 255), 1.0f, "(R) System menu >");
 		
-		vita2d_pgf_draw_textf(font, 20, 200, RGBA8(11, 199, 41, 255), 1.0f, "Firmware version: %.4s\n", getFwVersion());
-		vita2d_pgf_draw_textf(font, 20, 240, RGBA8(11, 199, 41, 255), 1.0f, "Model version: 0x%08X | %s\n", getModel(), getDeviceType());
-		vita2d_pgf_draw_textf(font, 20, 280, RGBA8(11, 199, 41, 255), 1.0f, "PS Vita CID: %s\n", getCID()); //Thanks Major_Tom
+		vita2d_pgf_draw_textf(font, 20, 200, RGBA8(11, 199, 41, 255), 1.0f, "Firmware version: %.4s (Henkaku version %c)\n", getFwVersion(), getHenkakuVersion());
+		vita2d_pgf_draw_textf(font, 20, 240, RGBA8(11, 199, 41, 255), 1.0f, "Model version: 0x%08X (%s)\n", getModel(), getDeviceModel());
+		vita2d_pgf_draw_textf(font, 20, 280, RGBA8(11, 199, 41, 255), 1.0f, "PS Vita unit: %s\n", getUnit());
+		vita2d_pgf_draw_textf(font, 20, 320, RGBA8(11, 199, 41, 255), 1.0f, "Motherboard: %s\n", getBoard());
+		vita2d_pgf_draw_textf(font, 20, 360, RGBA8(11, 199, 41, 255), 1.0f, "PS Vita CID: %s\n", getCID()); //Thanks Major_Tom
 		//vita2d_pgf_draw_textf(font, 20, 320, RGBA8(11, 199, 41, 255), 1.0f, "PS Vita MCID: %.8s\n", getmCID());
-		vita2d_pgf_draw_textf(font, 20, 320, RGBA8(11, 199, 41, 255), 1.0f, "PSID: %02X\n", getPSID()); //Thanks SMOKE
-		vita2d_pgf_draw_textf(font, 20, 360, RGBA8(11, 199, 41, 255), 1.0f, "PS Vita unit: %s\n", getUnit());
+		vita2d_pgf_draw_textf(font, 20, 400, RGBA8(11, 199, 41, 255), 1.0f, "PSID: %02X\n", getPSID()); //Thanks SMOKE
+		
 		
 		endDrawing();
 		
@@ -134,17 +136,24 @@ int miscMenu()
 		vita2d_pgf_draw_textf(font, 715, 525, RGBA8(93, 93, 93, 255), 1.0f, "(R) Kernel menu >");
 		
 		vita2d_pgf_draw_textf(font, 20, 200, RGBA8(11, 199, 41, 255), 1.0f, "Username: %s\n", getUser());
+		vita2d_pgf_draw_textf(font, 20, 240, RGBA8(11, 199, 41, 255), 1.0f, "Enter button: %s\n", getEnterButton());
 		
 		if (vshRemovableMemoryGetCardInsertState() == 1)
 		{
-			vita2d_pgf_draw_textf(font, 20, 240, RGBA8(11, 199, 41, 255), 1.0f, "Memory card storage: %s\n", getStorageInfo(0));
-			vita2d_pgf_draw_textf(font, 20, 280, RGBA8(11, 199, 41, 255), 1.0f, "Memory card storage free: %s\n", getStorageInfo(1));	
+			vita2d_pgf_draw_textf(font, 20, 280, RGBA8(11, 199, 41, 255), 1.0f, "Memory card storage: %s\n", getStorageInfo(0));
+			vita2d_pgf_draw_textf(font, 20, 320, RGBA8(11, 199, 41, 255), 1.0f, "Memory card storage free: %s\n", getStorageInfo(1));	
 		}
-		else if (vshRemovableMemoryGetCardInsertState() == 0)
-		{
-			vita2d_pgf_draw_textf(font, 20, 240, RGBA8(11, 199, 41, 255), 1.0f, "Internal storage: %s\n", getStorageInfo(0));
-			vita2d_pgf_draw_textf(font, 20, 280, RGBA8(11, 199, 41, 255), 1.0f, "Internal storage free: %s\n", getStorageInfo(1));
-		}
+		
+		char free_size_string[16], max_size_string[16];
+		SceOff freeSize = getPartitionInfo(0, "ur0:");
+		SceOff maxSize = getPartitionInfo(1, "ur0:");
+	
+		getSizeString(free_size_string, freeSize);
+		getSizeString(max_size_string, maxSize);
+	
+		vita2d_pgf_draw_textf(font, 20, 360, RGBA8(11, 199, 41, 255), 1.0f, "Internal storage: %s\n", max_size_string);
+		vita2d_pgf_draw_textf(font, 20, 400, RGBA8(11, 199, 41, 255), 1.0f, "Internal storage free: %s\n", free_size_string);
+
 		/*else
 			vita2d_pgf_draw_textf(font, 20, 240, RGBA8(11, 199, 41, 255), 1.0f, "Memory card not inserted."); //Although this is basically impossible on PCH-1000*/
 		
@@ -184,7 +193,7 @@ int mainMenu()
 		vita2d_draw_texture(VITAident, 0, -6);
 		vita2d_draw_rectangle(selector_image_x, selector_image_y, 960, 40, RGBA8(80, 80, 80, 255));
 		
-		vita2d_pgf_draw_textf(font, 780, 524, RGBA8(11, 199, 41, 255), 1.0, "VITAident 0.3\n\n");
+		vita2d_pgf_draw_textf(font, 780, 524, RGBA8(11, 199, 41, 255), 1.0, "VITAident 0.4\n\n");
 		
 		vita2d_pgf_draw_textf(font, 20, 200, RGBA8(11, 199, 41, 255), 1.0, "Kernel Information");
 		
