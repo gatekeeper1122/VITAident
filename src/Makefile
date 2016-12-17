@@ -5,7 +5,7 @@ SOURCES := src
 PREFIX   = arm-vita-eabi
 CC       = $(PREFIX)-gcc
 CXX      = $(PREFIX)-g++
-CFLAGS   = -Wl,-q -Wall -Werror -O3
+CFLAGS   = -Wl,-q -Wall -Werror -O3 -fno-lto
 CXXFLAGS = $(CFLAGS) -std=c++11 -fno-rtti -fno-exceptions
 ASFLAGS  = $(CFLAGS)
 
@@ -13,9 +13,9 @@ OBJS = app.o fs.o kernel.o main.o net.o power.o screenshot.o utils.o \
 
 LIBDIR = libs
 LDFLAGS = 
-LIBS := -lSceAppMgr_stub -lSceAppUtil_stub -lSceCommonDialog_stub -lSceCtrl_stub -lSceDisplay_stub -lSceGxm_stub -lSceKernel_stub \
-		-lSceNet_stub -lSceNetCtl_stub -lScePgf_stub -lScePower_stub -lSceSysmodule_stub -lvita2d -lSceVshBridge_stub \
-		-lfreetype -lpng -ljpeg -lz -lm -lc
+LIBS := -lvita2d -lSceAppMgr_stub -lSceAppUtil_stub -lSceCommonDialog_stub -lSceCtrl_stub -lSceDisplay_stub -lSceGxm_stub \
+		-lSceLibKernel_stub -lSceNet_stub -lSceNetCtl_stub -lScePgf_stub -lScePower_stub -lSceSysmodule_stub  -lSceVshBridge_stub \
+		-lfreetype -lpng16 -ljpeg -lz -lm -lc
 
 all: $(TARGET).vpk
 
