@@ -2,6 +2,8 @@ TARGET := VITAident
 TITLE_ID := VID000162
 SOURCES := src
 
+OBJS = app.o fs.o kernel.o main.o net.o power.o screenshot.o utils.o \
+
 PREFIX   = arm-vita-eabi
 CC       = $(PREFIX)-gcc
 CXX      = $(PREFIX)-g++
@@ -9,9 +11,7 @@ CFLAGS   = -Wl,-q -Wall -Werror -O3 -fno-lto
 CXXFLAGS = $(CFLAGS) -std=c++11 -fno-rtti -fno-exceptions
 ASFLAGS  = $(CFLAGS)
 
-OBJS = app.o fs.o kernel.o main.o net.o power.o screenshot.o utils.o \
-
-LIBDIR = libs
+LIBDIR = 
 LDFLAGS = 
 LIBS := -lvita2d -lSceAppMgr_stub -lSceAppUtil_stub -lSceCommonDialog_stub -lSceCtrl_stub -lSceDisplay_stub -lSceGxm_stub \
 		-lSceLibKernel_stub -lSceNet_stub -lSceNetCtl_stub -lScePgf_stub -lScePower_stub -lSceSysmodule_stub  -lSceVshBridge_stub \
@@ -20,7 +20,7 @@ LIBS := -lvita2d -lSceAppMgr_stub -lSceAppUtil_stub -lSceCommonDialog_stub -lSce
 all: $(TARGET).vpk
 
 %.vpk: eboot.bin
-	vita-mksfoex -d PARENTAL_LEVEL=1 -s APP_VER=00.40 -s TITLE_ID=$(TITLE_ID) "$(TARGET)" param.sfo
+	vita-mksfoex -d PARENTAL_LEVEL=1 -s APP_VER=00.50 -s TITLE_ID=$(TITLE_ID) "$(TARGET)" param.sfo
 	vita-pack-vpk -s param.sfo -b eboot.bin \
 		--add ../sce_sys/icon0.png=sce_sys/icon0.png \
 		--add ../sce_sys/livearea/contents/bg.png=sce_sys/livearea/contents/bg.png \
@@ -29,7 +29,7 @@ all: $(TARGET).vpk
 	$(TARGET).vpk
 	
 eboot.bin: $(TARGET).velf
-	vita-make-fself $< $@
+	vita-make-fself -c $< $@
 
 %.velf: %.elf
 	$(PREFIX)-strip -g $<

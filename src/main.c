@@ -21,8 +21,8 @@ int kernelMenu()
 		vita2d_pgf_draw_textf(font, 5, 525, RGBA8(93, 93, 93, 255), 1.0f, "< Misc menu (L)");
 		vita2d_pgf_draw_textf(font, 705, 525, RGBA8(93, 93, 93, 255), 1.0f, "(R) System menu >");
 		
-		vita2d_pgf_draw_textf(font, 20, 200, RGBA8(11, 199, 41, 255), 1.0f, "Firmware version: %.4s (Henkaku version %c)\n", getFwVersion(), getHenkakuVersion());
-		vita2d_pgf_draw_textf(font, 20, 240, RGBA8(11, 199, 41, 255), 1.0f, "Model version: 0x%08X (%s)\n", getModel(), getDeviceModel());
+		vita2d_pgf_draw_textf(font, 20, 200, RGBA8(11, 199, 41, 255), 1.0f, "Firmware version: %.4s\n", getFwVersion());
+		vita2d_pgf_draw_textf(font, 20, 240, RGBA8(11, 199, 41, 255), 1.0f, "Model version: %s %s (0x%08X)\n", getDeviceModel(), vshSysconHasWWAN()? "3G" : "WiFi", getModel());
 		vita2d_pgf_draw_textf(font, 20, 280, RGBA8(11, 199, 41, 255), 1.0f, "PS Vita unit: %s\n", getUnit());
 		vita2d_pgf_draw_textf(font, 20, 320, RGBA8(11, 199, 41, 255), 1.0f, "Motherboard: %s\n", getBoard());
 		vita2d_pgf_draw_textf(font, 20, 360, RGBA8(11, 199, 41, 255), 1.0f, "PS Vita CID: %s\n", getCID()); //Thanks Major_Tom
@@ -65,8 +65,8 @@ int systemMenu()
 		vita2d_pgf_draw_textf(font, 20, 280, RGBA8(11, 199, 41, 255), 1.0f, "IP address: %s\n", getIP());
 		vita2d_pgf_draw_textf(font, 20, 320, RGBA8(11, 199, 41, 255), 1.0f, "ARM clock frequency: %d MHz\n", getClockFrequency(ClockFrequencyType_Cpu));
 		vita2d_pgf_draw_textf(font, 20, 360, RGBA8(11, 199, 41, 255), 1.0f, "BUS clock frequency: %d MHz\n", getClockFrequency(ClockFrequencyType_Bus));
-		vita2d_pgf_draw_textf(font, 20, 400, RGBA8(11, 199, 41, 255), 1.0f, "GPU clock frequency: %d MHz\n", getClockFrequency(ClockFrequencyType_Gpu));
-		vita2d_pgf_draw_textf(font, 20, 440, RGBA8(11, 199, 41, 255), 1.0f, "GPU Xbar clock frequency: %d MHz\n\n", getClockFrequency(ClockFrequencyType_GpuXbar));
+		vita2d_pgf_draw_textf(font, 20, 400, RGBA8(11, 199, 41, 255), 1.0f, "GPU Xbar clock frequency: %d MHz\n\n", getClockFrequency(ClockFrequencyType_GpuXbar));
+		//vita2d_pgf_draw_textf(font, 20, 440, RGBA8(11, 199, 41, 255), 1.0f, "GPU clock frequency: %d MHz\n", getClockFrequency(ClockFrequencyType_Gpu));
 		
 		endDrawing();	
 		
@@ -193,7 +193,7 @@ int mainMenu()
 		vita2d_draw_texture(VITAident, 0, -6);
 		vita2d_draw_rectangle(selector_image_x, selector_image_y, 960, 40, RGBA8(80, 80, 80, 255));
 		
-		vita2d_pgf_draw_textf(font, 780, 524, RGBA8(11, 199, 41, 255), 1.0, "VITAident 0.4\n\n");
+		vita2d_pgf_draw_textf(font, 780, 524, RGBA8(11, 199, 41, 255), 1.0, "VITAident 0.5\n\n");
 		
 		vita2d_pgf_draw_textf(font, 20, 200, RGBA8(11, 199, 41, 255), 1.0, "Kernel Information");
 		
