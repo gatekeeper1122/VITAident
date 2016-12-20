@@ -9,6 +9,10 @@
 
 #include <vita2d.h>
 
+unsigned int fontColor;
+
+unsigned int getColor();
+char * getFontColor();
 vita2d_texture * loadPngWithFilter(const char * path);
 void endDrawing();
 void getSizeString(char *string, uint64_t size);
