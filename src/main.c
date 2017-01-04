@@ -7,195 +7,75 @@
 #include "screenshot.h"
 #include "utils.h"
 
-int kernelMenu()
-{
-	while (1) 
-	{
-		vita2d_start_drawing();
-		vita2d_clear_screen();
+void kernelMenu()
+{		
+	vita2d_font_draw_textf(font, 585, 225, RGBA8(0, 0, 0, 255), 20, "Kernel Menu");
 		
-		vita2d_draw_rectangle(0, 0, 960, 30, RGBA8(255, 255, 255, 26));
-		vita2d_draw_rectangle(40, 65, 190, 50, fontColor);
-		vita2d_draw_texture(VITAident, 0, 10);
-		
-		vita2d_pgf_draw_textf(font, 785, 25, fontColor, 1.0f, "Kernel Menu");
-		
-		vita2d_pgf_draw_textf(font, 5, 525, fontColor, 1.0f, "< Misc menu (L)");
-		vita2d_pgf_draw_textf(font, 705, 525, fontColor, 1.0f, "(R) System menu >");
-		
-		vita2d_pgf_draw_textf(font, 20, 200, fontColor, 1.0f, "Firmware version: %.4s\n", getFwVersion());
-		vita2d_pgf_draw_textf(font, 20, 240, fontColor, 1.0f, "Model version: %s %s (0x%08X)\n", getDeviceModel(), vshSysconHasWWAN()? "3G" : "WiFi", getModel());
-		vita2d_pgf_draw_textf(font, 20, 280, fontColor, 1.0f, "PS Vita unit: %s\n", getUnit());
-		vita2d_pgf_draw_textf(font, 20, 320, fontColor, 1.0f, "Motherboard: %s\n", getBoard());
-		vita2d_pgf_draw_textf(font, 20, 360, fontColor, 1.0f, "PS Vita CID: %s\n", getCID()); //Thanks Major_Tom
-		//vita2d_pgf_draw_textf(font, 20, 320, fontColor, 1.0f, "PS Vita MCID: %.8s\n", getmCID());
-		vita2d_pgf_draw_textf(font, 20, 400, fontColor, 1.0f, "PSID: %02X\n", getPSID()); //Thanks SMOKE
-		
-		
-		endDrawing();
-		
-		controls();
-		
-		if (pressed & SCE_CTRL_CIRCLE)
-			mainMenu();
-		
-		if (pressed & SCE_CTRL_LTRIGGER)
-			miscMenu();
-		else if (pressed & SCE_CTRL_RTRIGGER)
-			systemMenu();
-	}
-	
-	return 0;
+	vita2d_font_draw_textf(font, 364, 265, RGBA8(77, 76, 74, 255), 20, "Firmware version: %.4s\n", getFwVersion(false));
+	vita2d_font_draw_textf(font, 364, 305, RGBA8(77, 76, 74, 255), 20, "System version: %.4s\n", getFwVersion(true));
+	vita2d_font_draw_textf(font, 364, 345, RGBA8(77, 76, 74, 255), 20, "Model version: %s %s (0x%08X)\n", getDeviceModel(), vshSysconHasWWAN()? "3G" : "WiFi", getModel());
+	vita2d_font_draw_textf(font, 364, 385, RGBA8(77, 76, 74, 255), 20, "PS Vita unit: %s\n", getUnit());
+	vita2d_font_draw_textf(font, 364, 425, RGBA8(77, 76, 74, 255), 20, "Motherboard: %s\n", getBoard());
+	vita2d_font_draw_textf(font, 364, 465, RGBA8(77, 76, 74, 255), 20, "PS Vita CID: %s\n", getCID()); //Thanks Major_Tom
+	vita2d_font_draw_textf(font, 364, 505, RGBA8(77, 76, 74, 255), 20, "PSID: %02X\n", getPSID()); //Thanks SMOKE
 }
 
-int systemMenu()
+void systemMenu()
 {
-	while (1) 
-	{
-		vita2d_start_drawing();
-		vita2d_clear_screen();
-	
-		vita2d_draw_rectangle(0, 0, 960, 30, RGBA8(255, 255, 255, 26));
-		vita2d_draw_rectangle(40, 65, 190, 50, fontColor);
-		vita2d_draw_texture(VITAident, 0, 10);
+	vita2d_font_draw_textf(font, 585, 225, RGBA8(0, 0, 0, 255), 20, "System Menu");
 		
-		vita2d_pgf_draw_textf(font, 775, 25, fontColor, 1.0f, "System Menu");
-		
-		vita2d_pgf_draw_textf(font, 5, 525, fontColor, 1.0f, "< Kernel menu (L)");
-		vita2d_pgf_draw_textf(font, 703, 525, fontColor, 1.0f, "(R) Battery menu >");
-		
-		vita2d_pgf_draw_textf(font, 20, 200, fontColor, 1.0f, "Language: %s\n", getLang());
-		vita2d_pgf_draw_textf(font, 20, 240, fontColor, 1.0f, "MAC address: %s\n", getMacAddress());
-		vita2d_pgf_draw_textf(font, 20, 280, fontColor, 1.0f, "IP address: %s\n", getIP());
-		vita2d_pgf_draw_textf(font, 20, 320, fontColor, 1.0f, "ARM clock frequency: %d MHz\n", getClockFrequency(ClockFrequencyType_Cpu));
-		vita2d_pgf_draw_textf(font, 20, 360, fontColor, 1.0f, "BUS clock frequency: %d MHz\n", getClockFrequency(ClockFrequencyType_Bus));
-		vita2d_pgf_draw_textf(font, 20, 400, fontColor, 1.0f, "GPU Xbar clock frequency: %d MHz\n\n", getClockFrequency(ClockFrequencyType_GpuXbar));
-		//vita2d_pgf_draw_textf(font, 20, 440, fontColor, 1.0f, "GPU clock frequency: %d MHz\n", getClockFrequency(ClockFrequencyType_Gpu));
-		
-		endDrawing();	
-		
-		controls();
-		
-		if (pressed & SCE_CTRL_CIRCLE)
-			mainMenu();
-		
-		if (pressed & SCE_CTRL_LTRIGGER)
-			kernelMenu();
-		else if (pressed & SCE_CTRL_RTRIGGER)
-			batteryMenu();
-	}
-	
-	return 0;
+	vita2d_font_draw_textf(font, 364, 265, RGBA8(77, 76, 74, 255), 20, "Language: %s\n", getLang());
+	vita2d_font_draw_textf(font, 364, 305, RGBA8(77, 76, 74, 255), 20, "MAC address: %s\n", getMacAddress());
+	vita2d_font_draw_textf(font, 364, 345, RGBA8(77, 76, 74, 255), 20, "IP address: %s\n", getIP());
+	vita2d_font_draw_textf(font, 364, 385, RGBA8(77, 76, 74, 255), 20, "ARM clock frequency: %d MHz\n", getClockFrequency(ClockFrequencyType_Cpu));
+	vita2d_font_draw_textf(font, 364, 425, RGBA8(77, 76, 74, 255), 20, "BUS clock frequency: %d MHz\n", getClockFrequency(ClockFrequencyType_Bus));
+	vita2d_font_draw_textf(font, 364, 465, RGBA8(77, 76, 74, 255), 20, "GPU Xbar clock frequency: %d MHz\n\n", getClockFrequency(ClockFrequencyType_GpuXbar));
 }
 
-int batteryMenu()
+void batteryMenu()
 {
-	while (1) 
-	{
-		vita2d_start_drawing();
-		vita2d_clear_screen();
-	
-		vita2d_draw_rectangle(0, 0, 960, 30, RGBA8(255, 255, 255, 26));
-		vita2d_draw_rectangle(40, 65, 190, 50, fontColor);
-		vita2d_draw_texture(VITAident, 0, 10);
+	vita2d_font_draw_textf(font, 585, 225, RGBA8(0, 0, 0, 255), 20, "Battery Menu");
 		
-		vita2d_pgf_draw_textf(font, 772, 25, fontColor, 1.0f, "Battery Menu");
-		
-		vita2d_pgf_draw_textf(font, 5, 525, fontColor, 1.0f, "< System menu (L)");
-		vita2d_pgf_draw_textf(font, 734, 525, fontColor, 1.0f, "(R) Misc menu >");
-		
-		vita2d_pgf_draw_textf(font, 20, 200, fontColor, 1.0f, "Battery percentage: %s (%s)\n", displayBatteryPercentage(), batteryStatus());
-		vita2d_pgf_draw_textf(font, 20, 240, fontColor, 1.0f, "Battery remaining Capacity: %s\n", GetBatteryRemainCapacity());
-		int batteryLifeTime = scePowerGetBatteryLifeTime();
-		vita2d_pgf_draw_textf(font, 20, 280, fontColor, 1.0f, "Battery life time: %02dh %02dm\n", batteryLifeTime/60, batteryLifeTime-(batteryLifeTime/60*60));
-		vita2d_pgf_draw_textf(font, 20, 320, fontColor, 1.0f, "Battery temperature: %s C (%s F)\n", getBatteryTemp(0), getBatteryTemp(1));
-		vita2d_pgf_draw_textf(font, 20, 360, fontColor, 1.0f, "Battery voltage: %s V\n\n", getBatteryVoltage());
-		
-		endDrawing();
-		
-		controls();
-		
-		if (pressed & SCE_CTRL_CIRCLE)
-			mainMenu();
-		
-		if (pressed & SCE_CTRL_LTRIGGER)
-			systemMenu();
-		else if (pressed & SCE_CTRL_RTRIGGER)
-			miscMenu();
-	}
-	
-	return 0;
+	vita2d_font_draw_textf(font, 364, 265, RGBA8(77, 76, 74, 255), 20, "Battery percentage: %s (%s)\n", displayBatteryPercentage(), batteryStatus());
+	vita2d_font_draw_textf(font, 364, 305, RGBA8(77, 76, 74, 255), 20, "Battery remaining Capacity: %s\n", GetBatteryRemainCapacity());
+	int batteryLifeTime = scePowerGetBatteryLifeTime();
+	vita2d_font_draw_textf(font, 364, 345, RGBA8(77, 76, 74, 255), 20, "Battery life time: %02dh %02dm\n", batteryLifeTime/60, batteryLifeTime-(batteryLifeTime/60*60));
+	vita2d_font_draw_textf(font, 364, 385, RGBA8(77, 76, 74, 255), 20, "Battery temperature: %s C (%s F)\n", getBatteryTemp(0), getBatteryTemp(1));
+	vita2d_font_draw_textf(font, 364, 425, RGBA8(77, 76, 74, 255), 20, "Battery voltage: %s V\n\n", getBatteryVoltage());
 }
 
-int miscMenu()
-{
-	while (1) 
-	{
-		vita2d_start_drawing();
-		vita2d_clear_screen();
+void miscMenu()
+{		
+	vita2d_font_draw_textf(font, 585, 225, RGBA8(0, 0, 0, 255), 20, "Misc Menu");
 		
-		vita2d_draw_rectangle(0, 0, 960, 30, RGBA8(255, 255, 255, 26));
-		vita2d_draw_rectangle(40, 65, 190, 50, fontColor);
-		vita2d_draw_texture(VITAident, 0, 10);
-		
-		vita2d_pgf_draw_textf(font, 805, 25, fontColor, 1.0f, "Misc Menu");
-		
-		vita2d_pgf_draw_textf(font, 5, 525, fontColor, 1.0f, "< Battery menu (L)");
-		vita2d_pgf_draw_textf(font, 715, 525, fontColor, 1.0f, "(R) Kernel menu >");
-		
-		vita2d_pgf_draw_textf(font, 20, 200, fontColor, 1.0f, "Username: %s\n", getUser());
-		vita2d_pgf_draw_textf(font, 20, 240, fontColor, 1.0f, "Enter button: %s\n", getEnterButton());
-		
-		if (vshRemovableMemoryGetCardInsertState() == 1)
-		{
-			vita2d_pgf_draw_textf(font, 20, 280, fontColor, 1.0f, "Memory card storage: %s\n", getStorageInfo(0));
-			vita2d_pgf_draw_textf(font, 20, 320, fontColor, 1.0f, "Memory card storage free: %s\n", getStorageInfo(1));	
-		}
-		
-		char free_size_string[16], max_size_string[16];
-		SceOff freeSize = getPartitionInfo(0, "ur0:");
-		SceOff maxSize = getPartitionInfo(1, "ur0:");
-	
-		getSizeString(free_size_string, freeSize);
-		getSizeString(max_size_string, maxSize);
-	
-		vita2d_pgf_draw_textf(font, 20, 360, fontColor, 1.0f, "Internal storage: %s\n", max_size_string);
-		vita2d_pgf_draw_textf(font, 20, 400, fontColor, 1.0f, "Internal storage free: %s\n", free_size_string);
+	vita2d_font_draw_textf(font, 364, 265, RGBA8(77, 76, 74, 255), 20, "Username: %s\n", getUser());
+	vita2d_font_draw_textf(font, 364, 305, RGBA8(77, 76, 74, 255), 20, "Enter button: %s\n", getEnterButton());
 
-		/*else
-			vita2d_pgf_draw_textf(font, 20, 240, fontColor, 1.0f, "Memory card not inserted."); //Although this is basically impossible on PCH-1000*/
-		
-		endDrawing();
-		
-		controls();
-		
-		if (pressed & SCE_CTRL_CIRCLE)
-			mainMenu();
-		
-		if (pressed & SCE_CTRL_LTRIGGER)
-			batteryMenu();
-		else if (pressed & SCE_CTRL_RTRIGGER)
-			kernelMenu();
-	}
+	char free_size_string[16], max_size_string[16];
+	SceOff freeSize = getPartitionInfo(0, "ur0:");
+	SceOff maxSize = getPartitionInfo(1, "ur0:");
 	
-	return 0;
+	getSizeString(free_size_string, freeSize);
+	getSizeString(max_size_string, maxSize);
+
+	vita2d_font_draw_textf(font, 364, 345, RGBA8(77, 76, 74, 255), 20, "Internal storage: %s\n", max_size_string);
+	vita2d_font_draw_textf(font, 364, 385, RGBA8(77, 76, 74, 255), 20, "Internal storage free: %s\n", free_size_string);
+	
+	if (vshRemovableMemoryGetCardInsertState() == 1)
+	{
+		vita2d_font_draw_textf(font, 364, 425, RGBA8(77, 76, 74, 255), 20, "Memory card storage: %s\n", getStorageInfo(0));
+		vita2d_font_draw_textf(font, 364, 465, RGBA8(77, 76, 74, 255), 20, "Memory card storage free: %s\n", getStorageInfo(1));	
+	}
 }
 
 int mainMenu()
 {
 	int MenuSelection = 1; // Pretty obvious
-	int selector_x = 0; //The x position of the first selection
-	int selector_y = 120; //The y position of the first selection
-	int numMenuItems = 6; //Amount of items in the menu
+	int selector_x = 17; //The x position of the first selection
+	int selector_y = 26; //The y position of the first selection
+	int numMenuItems = 5; //Amount of items in the menu
 	int selector_image_x = 0; //Determines the starting x position of the selection
 	int selector_image_y = 0; //Determines the starting y position of the selection
-	
-	fontColor = getColor();
-	int color = 0;
-	
-	FILE * file = fopen("ux0:/data/VID000016/fontColor.bin", "r");
-	fscanf(file, "%d", &color);
-	fclose(file);
 	
 	while (1) 
 	{	
@@ -204,26 +84,22 @@ int mainMenu()
 		
 		vita2d_start_drawing();
 		vita2d_clear_screen();
-	
-		vita2d_draw_rectangle(0, 0, 960, 30, RGBA8(255, 255, 255, 26));
-		vita2d_draw_rectangle(40, 65, 190, 50, fontColor);
-		vita2d_draw_texture(VITAident, 0, 10);
 		
-		vita2d_draw_rectangle(selector_image_x, selector_image_y, 960, 40, RGBA8(80, 80, 80, 255));
+		vita2d_draw_texture(VITAident, 0, 0);
 		
-		vita2d_pgf_draw_textf(font, 775, 25, fontColor, 1.0, "VITAident 0.5\n\n");
+		vita2d_draw_rectangle(selector_image_x, selector_image_y, 328, 40, RGBA8(242, 119, 62, 255));
 		
-		vita2d_pgf_draw_textf(font, 20, 200, fontColor, 1.0, "Kernel Information");
+		//vita2d_font_draw_textf(font, 585, 225, RGBA8(78, 74, 67, 255), 25, "VITAident 0.5");
 		
-		vita2d_pgf_draw_textf(font, 20, 250, fontColor, 1.0, "System Information");
+		vita2d_font_draw_textf(font, 25, 92, RGBA8(78, 74, 67, 255), 20, "Kernel Information");
 		
-		vita2d_pgf_draw_textf(font, 20, 300, fontColor, 1.0, "Battery Information");
+		vita2d_font_draw_textf(font, 25, 132, RGBA8(78, 74, 67, 255), 20, "System Information");
 		
-		vita2d_pgf_draw_textf(font, 20, 350, fontColor, 1.0, "Miscelleanous Information");
+		vita2d_font_draw_textf(font, 25, 172, RGBA8(78, 74, 67, 255), 20, "Battery Information");
 		
-		vita2d_pgf_draw_textf(font, 20, 400, fontColor, 1.0, "Font Color: < %s >", getFontColor());
+		vita2d_font_draw_textf(font, 25, 212, RGBA8(78, 74, 67, 255), 20, "Miscelleanous Information");
 		
-		vita2d_pgf_draw_textf(font, 20, 450, fontColor, 1.0, "Exit");
+		vita2d_font_draw_textf(font, 25, 252, RGBA8(78, 74, 67, 255), 20, "Exit");
 		
 		controls();
 		
@@ -237,60 +113,22 @@ int mainMenu()
         if (MenuSelection < 1) 
 			MenuSelection = numMenuItems; //Sets the selection back to last
 		
-		endDrawing();
-		
-		if ((MenuSelection == 1) && (pressed & SCE_CTRL_CROSS))
-		{
+		if (MenuSelection == 1)
 			kernelMenu();
-        }
 		
-		else if ((MenuSelection == 2) && (pressed & SCE_CTRL_CROSS))
-		{
+		else if (MenuSelection == 2)
 			systemMenu();
-        }
 		
-		else if ((MenuSelection == 3) && (pressed & SCE_CTRL_CROSS))
-		{
+		else if (MenuSelection == 3)
 			batteryMenu();
-        }
 		
-		else if ((MenuSelection == 4) && (pressed & SCE_CTRL_CROSS))
-		{
+		else if (MenuSelection == 4) 
 			miscMenu();
-        }
 		
-		else if (MenuSelection == 5)
-		{
-			if(pressed & SCE_CTRL_LEFT)
-			{
-				if (color != 0)
-					color--;
-				if (color == 0 && pressed & SCE_CTRL_LEFT)
-					color = 8;
-					
-				FILE * file = fopen("ux0:/data/VID000016/fontColor.bin", "w");
-				fprintf(file, "%d", color);
-				fclose(file);
-			}
-			else if (pressed & SCE_CTRL_RIGHT)
-			{
-				if (color != 8)
-					color++;
-				if (color == 8 && pressed & SCE_CTRL_RIGHT)
-					color = 0;
-					
-				FILE * file = fopen("ux0:/data/VID000016/fontColor.bin", "w");
-				fprintf(file, "%d", color);
-				fclose(file);
-			}
-			if (pressed & SCE_CTRL_CROSS)
-				mainMenu();
-        }
-		
-		else if ((MenuSelection == 6) && (pressed & SCE_CTRL_CROSS))
-		{
+		else if ((MenuSelection == 5) && (pressed & SCE_CTRL_CROSS))
 			sceKernelExitProcess(0);
-        }
+		
+		endDrawing();
 	}	
 	
 	return 0;
@@ -317,14 +155,7 @@ int main(int argc, char *argv[])
 	
 	VITAident = loadPngWithFilter("ux0:/data/VID000016/res/VITAident.png");
 	
-	font = vita2d_load_custom_pgf("ux0:/data/VID000016/fonts/font.pgf");
-	
-	if (!fileExists("ux0:/data/VID000016/fontColor.bin"))
-	{
-		FILE * file = fopen("ux0:/data/VID000016/fontColor.bin", "w");
-		fprintf(file, "0");
-		fclose(file);
-	}
+	font = vita2d_load_font_file("ux0:/data/VID000016/fonts/Ubuntu-R.ttf");
 	
 	while(1)
 	{
@@ -352,7 +183,7 @@ int main(int argc, char *argv[])
 	
 	vita2d_fini();
 	vita2d_free_texture(VITAident);
-	vita2d_free_pgf(font);
+	vita2d_free_font(font);
 	termNet();
 	termAppUtil();
 	sceKernelExitProcess(0);
