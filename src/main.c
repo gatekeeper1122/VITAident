@@ -11,7 +11,7 @@ void kernelMenu()
 {		
 	vita2d_font_draw_textf(font, 585, 225, RGBA8(0, 0, 0, 255), 20, "Kernel Menu");
 		
-	vita2d_font_draw_textf(font, 364, 265, RGBA8(77, 76, 74, 255), 20, "Firmware version: %.4s\n", getFwVersion(false));
+	//vita2d_font_draw_textf(font, 364, 265, RGBA8(77, 76, 74, 255), 20, "Firmware version: %.4s\n", getFwVersion(false));
 	vita2d_font_draw_textf(font, 364, 305, RGBA8(77, 76, 74, 255), 20, "System version: %.4s\n", getFwVersion(true));
 	vita2d_font_draw_textf(font, 364, 345, RGBA8(77, 76, 74, 255), 20, "Model version: %s %s (0x%08X)\n", getDeviceModel(), vshSysconHasWWAN()? "3G" : "WiFi", getModel());
 	vita2d_font_draw_textf(font, 364, 385, RGBA8(77, 76, 74, 255), 20, "PS Vita unit: %s\n", getUnit());
@@ -77,6 +77,9 @@ int mainMenu()
 	int selector_image_x = 0; //Determines the starting x position of the selection
 	int selector_image_y = 0; //Determines the starting y position of the selection
 	
+	static char version[16] = "";
+	strcpy(version, getFwVersion(false)); //For saftey purposes, I don't want this in a while loop.
+	
 	while (1) 
 	{	
 		selector_image_x = selector_x + (selector_xDistance * MenuSelection); //Determines where the selection image is drawn for each selection
@@ -114,7 +117,10 @@ int mainMenu()
 			MenuSelection = numMenuItems; //Sets the selection back to last
 		
 		if (MenuSelection == 1)
+		{
 			kernelMenu();
+			vita2d_font_draw_textf(font, 364, 265, RGBA8(77, 76, 74, 255), 20, "Firmware version: %.4s\n", version);
+		}
 		
 		else if (MenuSelection == 2)
 			systemMenu();
