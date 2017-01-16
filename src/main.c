@@ -92,17 +92,32 @@ int mainMenu()
 		
 		vita2d_draw_rectangle(selector_image_x, selector_image_y, 328, 40, RGBA8(242, 119, 62, 255));
 		
-		//vita2d_font_draw_textf(font, 585, 225, RGBA8(78, 74, 67, 255), 25, "VITAident 0.5");
+		vita2d_font_draw_textf(font, 10, 25, RGBA8(250, 237, 227, 255), 20, "VITAident 0.7");
 		
-		vita2d_font_draw_textf(font, 25, 92, RGBA8(78, 74, 67, 255), 20, "Kernel Information");
+		if (MenuSelection == 1)
+			vita2d_font_draw_textf(font, 25, 92, RGBA8(250, 237, 227, 255), 20, "Kernel Information");
+		else 
+			vita2d_font_draw_textf(font, 25, 92, RGBA8(78, 74, 67, 255), 20, "Kernel Information");
 		
-		vita2d_font_draw_textf(font, 25, 132, RGBA8(78, 74, 67, 255), 20, "System Information");
+		if (MenuSelection == 2)
+			vita2d_font_draw_textf(font, 25, 132, RGBA8(250, 237, 227, 255), 20, "System Information");
+		else
+			vita2d_font_draw_textf(font, 25, 132, RGBA8(78, 74, 67, 255), 20, "System Information");
 		
-		vita2d_font_draw_textf(font, 25, 172, RGBA8(78, 74, 67, 255), 20, "Battery Information");
+		if (MenuSelection == 3)
+			vita2d_font_draw_textf(font, 25, 172, RGBA8(250, 237, 227, 255), 20, "Battery Information");
+		else
+			vita2d_font_draw_textf(font, 25, 172, RGBA8(78, 74, 67, 255), 20, "Battery Information");
 		
-		vita2d_font_draw_textf(font, 25, 212, RGBA8(78, 74, 67, 255), 20, "Miscelleanous Information");
+		if (MenuSelection == 4)
+			vita2d_font_draw_textf(font, 25, 212, RGBA8(250, 237, 227, 255), 20, "Miscelleanous");
+		else
+			vita2d_font_draw_textf(font, 25, 212, RGBA8(78, 74, 67, 255), 20, "Miscelleanous");
 		
-		vita2d_font_draw_textf(font, 25, 252, RGBA8(78, 74, 67, 255), 20, "Exit");
+		if (MenuSelection == 5)
+			vita2d_font_draw_textf(font, 25, 252, RGBA8(250, 237, 227, 255), 20, "Exit");
+		else
+			vita2d_font_draw_textf(font, 25, 252, RGBA8(78, 74, 67, 255), 20, "Exit");
 		
 		controls();
 		
