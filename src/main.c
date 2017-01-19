@@ -36,12 +36,14 @@ void batteryMenu()
 {
 	vita2d_font_draw_textf(font, 585, 225, RGBA8(0, 0, 0, 255), 20, "Battery Menu");
 		
-	vita2d_font_draw_textf(font, 364, 265, RGBA8(77, 76, 74, 255), 20, "Battery percentage: %s (%s)\n", displayBatteryPercentage(), batteryStatus());
-	vita2d_font_draw_textf(font, 364, 305, RGBA8(77, 76, 74, 255), 20, "Battery remaining Capacity: %s\n", GetBatteryRemainCapacity());
+	vita2d_font_draw_textf(font, 364, 265, RGBA8(77, 76, 74, 255), 20, "Battery percentage: %s (%s)\n", getBatteryPercentage(), getBatteryStatus());
+	vita2d_font_draw_textf(font, 364, 305, RGBA8(77, 76, 74, 255), 20, "Battery capacity: %s (remaining: %s)\n", getBatteryCapacity(), getBatteryRemainCapacity());
 	int batteryLifeTime = scePowerGetBatteryLifeTime();
-	vita2d_font_draw_textf(font, 364, 345, RGBA8(77, 76, 74, 255), 20, "Battery life time: %02dh %02dm\n", batteryLifeTime/60, batteryLifeTime-(batteryLifeTime/60*60));
+	vita2d_font_draw_textf(font, 364, 345, RGBA8(77, 76, 74, 255), 20, "Battery life time: %02dh %02dm (SOH: %s)\n", batteryLifeTime/60, batteryLifeTime-(batteryLifeTime/60*60), getBatterySOH());
 	vita2d_font_draw_textf(font, 364, 385, RGBA8(77, 76, 74, 255), 20, "Battery temperature: %s C (%s F)\n", getBatteryTemp(0), getBatteryTemp(1));
-	vita2d_font_draw_textf(font, 364, 425, RGBA8(77, 76, 74, 255), 20, "Battery voltage: %s V\n\n", getBatteryVoltage());
+	vita2d_font_draw_textf(font, 364, 425, RGBA8(77, 76, 74, 255), 20, "Battery voltage: %s V (cycle count: %s)\n\n", getBatteryVoltage(), getBatteryCycleCount());
+	vita2d_font_draw_textf(font, 364, 465, RGBA8(77, 76, 74, 255), 20, "Udcd state: %s (%s)\n", getUdcdCableState(), getUdcdChargingState());
+
 }
 
 void miscMenu()
@@ -65,7 +67,7 @@ void miscMenu()
 	{
 		vita2d_font_draw_textf(font, 364, 425, RGBA8(77, 76, 74, 255), 20, "Memory card storage: %s\n", getStorageInfo(0));
 		vita2d_font_draw_textf(font, 364, 465, RGBA8(77, 76, 74, 255), 20, "Memory card storage free: %s\n", getStorageInfo(1));	
-	}
+	}	
 }
 
 int mainMenu()
@@ -92,7 +94,7 @@ int mainMenu()
 		
 		vita2d_draw_rectangle(selector_image_x, selector_image_y, 328, 40, RGBA8(242, 119, 62, 255));
 		
-		vita2d_font_draw_textf(font, 10, 25, RGBA8(250, 237, 227, 255), 20, "VITAident 0.7");
+		vita2d_font_draw_textf(font, 15, 30, RGBA8(250, 237, 227, 255), 20, "VITAident 0.7");
 		
 		if (MenuSelection == 1)
 			vita2d_font_draw_textf(font, 25, 92, RGBA8(250, 237, 227, 255), 20, "Kernel Information");
