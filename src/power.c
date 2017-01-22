@@ -36,6 +36,28 @@ char * getBatteryPercentage()
 	return percentage;
 }
 
+/*char * getBatteryElec() //Crashes the VITA
+{
+	static char batteryElec[10];
+	
+	int elec = scePowerGetBatteryElec();
+	
+	sprintf(batteryElec, "%d", elec);
+	
+	return batteryElec;
+}*/
+
+char * getUsingWireless()
+{
+	static char usingWireless[10];
+	
+	int wireless = scePowerGetUsingWireless();
+	
+	sprintf(usingWireless, "%d", wireless);
+	
+	return usingWireless;
+}
+
 char * getBatterySOH()
 {
 	static char SOH[10];

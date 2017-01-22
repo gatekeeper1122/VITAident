@@ -18,12 +18,16 @@ int scePowerGetBatteryTemp();
 int scePowerGetBatteryVolt();
 int scePowerGetBatterySOH();
 int scePowerGetBatteryCycleCount();
+//int scePowerGetBatteryElec(); Crashes the VITA
+int scePowerGetUsingWireless();
 
 int scePowerGetGpuXbarClockFrequency();
 
 int getClockFrequency(ClockFrequencyType type);
 const char * getBatteryStatus();
 char * getBatteryPercentage();
+//char * getBatteryElec();
+char * getUsingWireless();
 char * getBatterySOH();
 char * getBatteryCycleCount();
 char * getBatteryCapacity();
