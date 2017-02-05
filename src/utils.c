@@ -46,3 +46,19 @@ const char * concat(char* s1, char* s2)
     strcat(ns, s2);
     return ns;
 }
+
+char * readID_dat()
+{
+	SceUID file;
+	static char writePath[250];
+	char str[256];
+	
+	file = sceIoOpen("ux0:id.dat", SCE_O_RDONLY, 0777);
+	
+	sceIoLseek(file, 0, SCE_SEEK_SET);
+	sceIoRead(file, &str, 187);
+		
+	sprintf(writePath, "%s", str);
+	
+	return writePath;
+}

@@ -75,12 +75,15 @@ int mainMenu()
 	int MenuSelection = 1; // Pretty obvious
 	int selector_x = 17; //The x position of the first selection
 	int selector_y = 26; //The y position of the first selection
-	int numMenuItems = 5; //Amount of items in the menu
+	int numMenuItems = 6; //Amount of items in the menu
 	int selector_image_x = 0; //Determines the starting x position of the selection
 	int selector_image_y = 0; //Determines the starting y position of the selection
 	
 	static char version[16] = "";
 	strcpy(version, getFwVersion(false)); //For saftey purposes, I don't want this in a while loop.
+	
+	static char idDat[250] = "";
+	strcpy(idDat, readID_dat());
 	
 	while (1) 
 	{	
@@ -117,9 +120,14 @@ int mainMenu()
 			vita2d_font_draw_textf(font, 25, 212, RGBA8(78, 74, 67, 255), 20, "Miscelleanous");
 		
 		if (MenuSelection == 5)
-			vita2d_font_draw_textf(font, 25, 252, RGBA8(250, 237, 227, 255), 20, "Exit");
+			vita2d_font_draw_textf(font, 25, 252, RGBA8(250, 237, 227, 255), 20, "id.dat");
 		else
-			vita2d_font_draw_textf(font, 25, 252, RGBA8(78, 74, 67, 255), 20, "Exit");
+			vita2d_font_draw_textf(font, 25, 252, RGBA8(78, 74, 67, 255), 20, "id.dat");
+		
+		if (MenuSelection == 6)
+			vita2d_font_draw_textf(font, 25, 292, RGBA8(250, 237, 227, 255), 20, "Exit");
+		else
+			vita2d_font_draw_textf(font, 25, 292, RGBA8(78, 74, 67, 255), 20, "Exit");
 		
 		controls();
 		
@@ -147,8 +155,15 @@ int mainMenu()
 		
 		else if (MenuSelection == 4) 
 			miscMenu();
+	
+		else if (MenuSelection == 5) 
+		{
+			vita2d_font_draw_textf(font, 585, 225, RGBA8(0, 0, 0, 255), 20, "id.dat Menu");
 		
-		else if ((MenuSelection == 5) && (pressed & SCE_CTRL_CROSS))
+			vita2d_font_draw_textf(font, 364, 265, RGBA8(77, 76, 74, 255), 20, "%s\n", idDat);
+		}
+		
+		else if ((MenuSelection == 6) && (pressed & SCE_CTRL_CROSS))
 			sceKernelExitProcess(0);
 		
 		endDrawing();
@@ -183,25 +198,6 @@ int main(int argc, char *argv[])
 	while(1)
 	{
         mainMenu();
-	
-		/*if (pressed & SCE_CTRL_START)
-		{
-			if (!(dirExists("ux0:/data/VID000016")))
-			{
-				SceUID dir;
-				
-				dir = sceIoDopen("ux0:/data/VID000016");
-				sceIoMkdir("ux0:/data/VID000016", 0777);
-				sceIoDclose(dir);
-				
-				dir = sceIoDopen("ux0:/data/VID000016/screenshots");
-				sceIoMkdir("ux0:/data/VID000016/screenshots", 0777);
-				sceIoDclose(dir);
-			}
-			
-			captureScreenshot("ux0:/data/VID000016/screenshots/VITAident.bmp");
-			break;
-		}*/
 	}
 	
 	vita2d_fini();

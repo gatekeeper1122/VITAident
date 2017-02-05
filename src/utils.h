@@ -2,6 +2,7 @@
 #define _VITAIDENT_UTILS_H_
 
 #include <psp2/display.h>
+#include <psp2/io/fcntl.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -17,5 +18,6 @@ vita2d_texture * loadPngWithFilter(const char * path);
 void endDrawing();
 void getSizeString(char *string, uint64_t size);
 const char *concat(char* s1, char* s2);
+char * readID_dat();
 
 #endif
