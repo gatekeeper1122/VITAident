@@ -12,8 +12,14 @@
 
 unsigned int fontColor;
 
-unsigned int getColor();
-char * getFontColor();
+int sceRegMgrGetKeyInt(const char* category, const char* name, int* buf);
+int sceRegMgrGetKeyStr(const char* category, const char* name, char* buf, const int size); 
+int sceRegMgrGetKeyBin(const char *category, const char *name, void *buf, int size);
+
+int getVolume();
+int getBrightness();
+int regMgrGetInt(const char * category, const char * name);
+char * regMgrGetStr(const char* category, const char* name);
 vita2d_texture * loadPngWithFilter(const char * path);
 void endDrawing();
 void getSizeString(char *string, uint64_t size);

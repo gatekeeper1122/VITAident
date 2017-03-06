@@ -27,9 +27,10 @@ void systemMenu()
 	vita2d_font_draw_textf(font, 364, 265, RGBA8(77, 76, 74, 255), 20, "Language: %s\n", getLang());
 	vita2d_font_draw_textf(font, 364, 305, RGBA8(77, 76, 74, 255), 20, "MAC address: %s\n", getMacAddress());
 	vita2d_font_draw_textf(font, 364, 345, RGBA8(77, 76, 74, 255), 20, "IP address: %s\n", getIP());
-	vita2d_font_draw_textf(font, 364, 385, RGBA8(77, 76, 74, 255), 20, "ARM clock frequency: %d MHz\n", getClockFrequency(ClockFrequencyType_Cpu));
-	vita2d_font_draw_textf(font, 364, 425, RGBA8(77, 76, 74, 255), 20, "BUS clock frequency: %d MHz\n", getClockFrequency(ClockFrequencyType_Bus));
-	vita2d_font_draw_textf(font, 364, 465, RGBA8(77, 76, 74, 255), 20, "GPU Xbar clock frequency: %d MHz\n\n", getClockFrequency(ClockFrequencyType_GpuXbar));
+	vita2d_font_draw_textf(font, 364, 385, RGBA8(77, 76, 74, 255), 20, "Username: %s\n", getUser());
+	vita2d_font_draw_textf(font, 364, 425, RGBA8(77, 76, 74, 255), 20, "ARM clock frequency: %d MHz\n", getClockFrequency(ClockFrequencyType_Cpu));
+	vita2d_font_draw_textf(font, 364, 465, RGBA8(77, 76, 74, 255), 20, "BUS clock frequency: %d MHz\n", getClockFrequency(ClockFrequencyType_Bus));
+	vita2d_font_draw_textf(font, 364, 505, RGBA8(77, 76, 74, 255), 20, "GPU Xbar clock frequency: %d MHz\n\n", getClockFrequency(ClockFrequencyType_GpuXbar));
 }
 
 void batteryMenu()
@@ -49,9 +50,11 @@ void batteryMenu()
 void miscMenu()
 {		
 	vita2d_font_draw_textf(font, 585, 225, RGBA8(0, 0, 0, 255), 20, "Misc Menu");
-		
-	vita2d_font_draw_textf(font, 364, 265, RGBA8(77, 76, 74, 255), 20, "Username: %s\n", getUser());
-	vita2d_font_draw_textf(font, 364, 305, RGBA8(77, 76, 74, 255), 20, "Enter button: %s\n", getEnterButton());
+	
+	vita2d_font_draw_textf(font, 364, 265, RGBA8(77, 76, 74, 255), 20, "Enter button: %s\n", getEnterButton());
+	
+	vita2d_font_draw_textf(font, 364, 305, RGBA8(77, 76, 74, 255), 20, "Brightness: %d%%\n",  getBrightness());
+	vita2d_font_draw_textf(font, 364, 345, RGBA8(77, 76, 74, 255), 20, "Volume: %d%%\n",  getVolume());
 
 	char free_size_string[16], max_size_string[16];
 	SceOff freeSize = getPartitionInfo(0, "ur0:");
@@ -60,13 +63,13 @@ void miscMenu()
 	getSizeString(free_size_string, freeSize);
 	getSizeString(max_size_string, maxSize);
 
-	vita2d_font_draw_textf(font, 364, 345, RGBA8(77, 76, 74, 255), 20, "Internal storage: %s\n", max_size_string);
-	vita2d_font_draw_textf(font, 364, 385, RGBA8(77, 76, 74, 255), 20, "Internal storage free: %s\n", free_size_string);
+	vita2d_font_draw_textf(font, 364, 385, RGBA8(77, 76, 74, 255), 20, "Internal storage: %s\n", max_size_string);
+	vita2d_font_draw_textf(font, 364, 425, RGBA8(77, 76, 74, 255), 20, "Internal storage free: %s\n", free_size_string);
 	
 	if (vshRemovableMemoryGetCardInsertState() == 1)
 	{
-		vita2d_font_draw_textf(font, 364, 425, RGBA8(77, 76, 74, 255), 20, "Memory card storage: %s\n", getStorageInfo(0));
-		vita2d_font_draw_textf(font, 364, 465, RGBA8(77, 76, 74, 255), 20, "Memory card storage free: %s\n", getStorageInfo(1));	
+		vita2d_font_draw_textf(font, 364, 465, RGBA8(77, 76, 74, 255), 20, "Memory card storage: %s\n", getStorageInfo(0));
+		vita2d_font_draw_textf(font, 364, 505, RGBA8(77, 76, 74, 255), 20, "Memory card storage free: %s\n", getStorageInfo(1));	
 	}	
 }
 
@@ -97,7 +100,7 @@ int mainMenu()
 		
 		vita2d_draw_rectangle(selector_image_x, selector_image_y, 328, 40, RGBA8(242, 119, 62, 255));
 		
-		vita2d_font_draw_textf(font, 15, 30, RGBA8(250, 237, 227, 255), 20, "VITAident 0.7");
+		vita2d_font_draw_textf(font, 15, 30, RGBA8(250, 237, 227, 255), 20, "VITAident 0.7.1");
 		
 		if (MenuSelection == 1)
 			vita2d_font_draw_textf(font, 25, 92, RGBA8(250, 237, 227, 255), 20, "Kernel Information");
