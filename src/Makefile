@@ -2,7 +2,7 @@ TARGET := VITAident
 TITLE_ID := VID000162
 SOURCES := src
 
-OBJS = app.o fs.o kernel.o main.o net.o power.o utils.o \
+OBJS = app.o fs.o kernel.o main.o net.o power.o utils.o res/VITAident.o \
 
 PREFIX   = arm-vita-eabi
 CC       = $(PREFIX)-gcc
@@ -41,8 +41,6 @@ $(TARGET).elf: $(OBJS)
 	$(CC) $(CFLAGS) $^ $(LIBS) -o $@
 
 %.o: %.png
-	$(PREFIX)-ld -r -b binary -o $@ $^
-%.o: %.txt
 	$(PREFIX)-ld -r -b binary -o $@ $^
 
 clean:

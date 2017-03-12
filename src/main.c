@@ -6,6 +6,8 @@
 #include "power.h"
 #include "utils.h"
 
+extern unsigned char _binary_res_VITAident_png_start;
+
 void kernelMenu()
 {		
 	vita2d_font_draw_textf(font, 585, 225, RGBA8(0, 0, 0, 255), 20, "Kernel Menu");
@@ -193,7 +195,7 @@ int main(int argc, char *argv[])
 	
 	vita2d_set_clear_color(RGBA8(0, 0, 0, 255));
 	
-	VITAident = loadPngWithFilter("ux0:/data/VID000016/res/VITAident.png");
+	VITAident = loadPngWithFilter(&_binary_res_VITAident_png_start);
 	
 	font = vita2d_load_font_file("ux0:/data/VID000016/fonts/Ubuntu-R.ttf");
 	
