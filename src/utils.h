@@ -10,8 +10,6 @@
 
 #include <vita2d.h>
 
-unsigned int fontColor;
-
 int sceRegMgrGetKeyInt(const char* category, const char* name, int* buf);
 int sceRegMgrGetKeyStr(const char* category, const char* name, char* buf, const int size); 
 int sceRegMgrGetKeyBin(const char *category, const char *name, void *buf, int size);

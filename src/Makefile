@@ -2,7 +2,7 @@ TARGET := VITAident
 TITLE_ID := VID000162
 SOURCES := src
 
-OBJS = app.o fs.o kernel.o main.o net.o power.o screenshot.o utils.o \
+OBJS = app.o fs.o kernel.o main.o net.o power.o utils.o \
 
 PREFIX   = arm-vita-eabi
 CC       = $(PREFIX)-gcc

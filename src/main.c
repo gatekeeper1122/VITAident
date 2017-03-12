@@ -4,7 +4,6 @@
 #include "main.h"
 #include "net.h"
 #include "power.h"
-#include "screenshot.h"
 #include "utils.h"
 
 void kernelMenu()
