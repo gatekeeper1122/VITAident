@@ -7,6 +7,9 @@ int getVolume()
 	
 	calculatedVolume = (volume * 3.33333333);
 	
+	if (calculatedVolume == 99)
+		calculatedVolume = 100;
+	
 	return calculatedVolume;
 }
 

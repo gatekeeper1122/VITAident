@@ -13,9 +13,11 @@ ASFLAGS  = $(CFLAGS)
 
 LIBDIR = 
 LDFLAGS = 
-LIBS := -lvita2d -lSceAppMgr_stub -lSceAppUtil_stub -lSceCommonDialog_stub -lSceCtrl_stub -lSceDisplay_stub -lSceGxm_stub \
-		-lSceLibKernel_stub -lSceNet_stub -lSceNetCtl_stub -lScePgf_stub -lScePower_stub -lSceSysmodule_stub  -lSceVshBridge_stub \
-		-lfreetype -lpng16 -ljpeg -lz -lm -lc \
+LIBS := -lvita2d -lSceDisplay_stub -lSceGxm_stub \
+		-lSceSysmodule_stub -lSceCtrl_stub -lScePvf_stub \
+		-lSceCommonDialog_stub -lfreetype -lpng -ljpeg -lz -lm -lc \
+		-lSceAppMgr_stub -lSceAppUtil_stub \
+		-lSceLibKernel_stub -lSceNet_stub -lSceNetCtl_stub -lScePower_stub  -lSceVshBridge_stub \
 		-lSceReg_stub -lSceUdcd_stub -lSceUsbstorVStorDriver_stub 
 		#-lSceSysmemForDriver_stub
 

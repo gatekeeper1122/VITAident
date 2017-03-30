@@ -14,7 +14,7 @@
 #define selector_yDistance 40 //The distance between the Y axis of the two selections
 
 vita2d_texture *VITAident;
-vita2d_font *font;
+vita2d_pvf *font;
 
 SceCtrlData pad, old_pad;
 unsigned int pressed;
