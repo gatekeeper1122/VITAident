@@ -1,24 +1,28 @@
-# VITAident
+# VITAident [![Github latest downloads](https://img.shields.io/github/downloads/joel16/VITAident/total.svg)](https://github.com/joel16/VITAident/releases/latest)
 
 ![VITAident Banner](http://i.imgur.com/X8f2S3Q.png)
 
 # Features:
-- Displays ARM, BUS and GPU clock frequency.
-- Displays battery life time.
-- Displays battery percentage.
-- Displays battery remaining capacity.
-- Displays language.
-- Displays firmware and model info.
+- Displays firmware (spoof/actual) and model info (Vita fat/slim/TV/PTEL/PDEL).
+- Displays PS Vita Unit (Cex/Dex).
+- Displays Vita motherboard.
 - Displays PS VITA CID (Console ID).
-- Displays battery temperature in both degrees C and F.
-- Displays battery voltage.
-- Displays SD free and total capacity. (Thanks TheOfficialFloW)
-- Displays GPU Xbar clock frequency.
-- Displays IP address.
-- Displays MAC address.
 - Displays PSID.
-- Automatically saves screenshot upon exit.
-
+- Displays language.
+- Displays MAC address.
+- Displays IP address.
+- Displays PSN username.
+- Displays ARM, BUS and GPU clock frequency.
+- Displays GPU Xbar clock frequency.
+- Displays battery life time.
+- Displays battery percentage, and charging status.
+- Displays battery capacity.
+- Displays battery temperature in both degrees C and F.
+- Displays battery voltage and cycle count.
+- Displays USB/adapter connection state. (UDCD)
+- Displays enter button (Cross/Circle).
+- Displays current brightness and volume.
+- Displays SD free and total capacity (Thanks TheOfficialFloW).
 
 # Credits: 
-Major_Tom, Smoke, TheOfficialFloW, Rinnegatamante and himanshugoel2797.
+Major_Tom, Smoke, TheOfficialFloW, Rinnegatamante, himanshugoel2797, franci95 and fate6.
