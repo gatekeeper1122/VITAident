@@ -12,39 +12,39 @@ void kernelMenu()
 {		
 	vita2d_pvf_draw_textf(font, 585, 225, RGBA8(0, 0, 0, 255), 1.1f, "Kernel Menu");
 		
-	//vita2d_pvf_draw_textf(font, 364, 265, RGBA8(77, 76, 74, 255), 1.1f, "Firmware version: %.4s\n", getFwVersion(false));
-	vita2d_pvf_draw_textf(font, 364, 305, RGBA8(77, 76, 74, 255), 1.1f, "System version: %.4s\n", getFwVersion(true));
-	vita2d_pvf_draw_textf(font, 364, 345, RGBA8(77, 76, 74, 255), 1.1f, "Model version: %s %s (0x%08X)\n", getDeviceModel(), vshSysconHasWWAN()? "3G" : "WiFi", getModel());
-	vita2d_pvf_draw_textf(font, 364, 385, RGBA8(77, 76, 74, 255), 1.1f, "PS Vita unit: %s\n", getUnit());
-	vita2d_pvf_draw_textf(font, 364, 425, RGBA8(77, 76, 74, 255), 1.1f, "Motherboard: %s\n", getBoard());
-	vita2d_pvf_draw_textf(font, 364, 465, RGBA8(77, 76, 74, 255), 1.1f, "PS Vita CID: %s\n", getCID()); //Thanks Major_Tom
-	vita2d_pvf_draw_textf(font, 364, 505, RGBA8(77, 76, 74, 255), 1.1f, "PSID: %02X\n", getPSID()); //Thanks SMOKE
+	//vita2d_pvf_draw_textf(font, 364, 265, RGBA8(51, 51, 51, 255), 1.1f, "Firmware version: %.4s\n", getFwVersion(false));
+	vita2d_pvf_draw_textf(font, 364, 305, RGBA8(51, 51, 51, 255), 1.1f, "System version: %.4s\n", getFwVersion(true));
+	vita2d_pvf_draw_textf(font, 364, 345, RGBA8(51, 51, 51, 255), 1.1f, "Model version: %s %s (0x%08X)\n", getDeviceModel(), vshSysconHasWWAN()? "3G" : "WiFi", getModel());
+	vita2d_pvf_draw_textf(font, 364, 385, RGBA8(51, 51, 51, 255), 1.1f, "PS Vita unit: %s\n", getUnit());
+	vita2d_pvf_draw_textf(font, 364, 425, RGBA8(51, 51, 51, 255), 1.1f, "Motherboard: %s\n", getBoard());
+	vita2d_pvf_draw_textf(font, 364, 465, RGBA8(51, 51, 51, 255), 1.1f, "PS Vita CID: %s\n", getCID()); //Thanks Major_Tom
+	vita2d_pvf_draw_textf(font, 364, 505, RGBA8(51, 51, 51, 255), 1.1f, "PSID: %02X\n", getPSID()); //Thanks SMOKE
 }
 
 void systemMenu()
 {
 	vita2d_pvf_draw_textf(font, 585, 225, RGBA8(0, 0, 0, 255), 1.1f, "System Menu");
 		
-	vita2d_pvf_draw_textf(font, 364, 265, RGBA8(77, 76, 74, 255), 1.1f, "Language: %s\n", getLang());
-	vita2d_pvf_draw_textf(font, 364, 305, RGBA8(77, 76, 74, 255), 1.1f, "MAC address: %s\n", getMacAddress());
-	vita2d_pvf_draw_textf(font, 364, 345, RGBA8(77, 76, 74, 255), 1.1f, "IP address: %s\n", getIP());
-	vita2d_pvf_draw_textf(font, 364, 385, RGBA8(77, 76, 74, 255), 1.1f, "Username: %s\n", getUser());
-	vita2d_pvf_draw_textf(font, 364, 425, RGBA8(77, 76, 74, 255), 1.1f, "ARM clock frequency: %d MHz\n", getClockFrequency(ClockFrequencyType_Cpu));
-	vita2d_pvf_draw_textf(font, 364, 465, RGBA8(77, 76, 74, 255), 1.1f, "BUS clock frequency: %d MHz\n", getClockFrequency(ClockFrequencyType_Bus));
-	vita2d_pvf_draw_textf(font, 364, 505, RGBA8(77, 76, 74, 255), 1.1f, "GPU Xbar clock frequency: %d MHz\n\n", getClockFrequency(ClockFrequencyType_GpuXbar));
+	vita2d_pvf_draw_textf(font, 364, 265, RGBA8(51, 51, 51, 255), 1.1f, "Language: %s\n", getLang());
+	vita2d_pvf_draw_textf(font, 364, 305, RGBA8(51, 51, 51, 255), 1.1f, "MAC address: %s\n", getMacAddress());
+	vita2d_pvf_draw_textf(font, 364, 345, RGBA8(51, 51, 51, 255), 1.1f, "IP address: %s\n", getIP());
+	vita2d_pvf_draw_textf(font, 364, 385, RGBA8(51, 51, 51, 255), 1.1f, "Username: %s\n", getUser());
+	vita2d_pvf_draw_textf(font, 364, 425, RGBA8(51, 51, 51, 255), 1.1f, "ARM clock frequency: %d MHz\n", getClockFrequency(ClockFrequencyType_Cpu));
+	vita2d_pvf_draw_textf(font, 364, 465, RGBA8(51, 51, 51, 255), 1.1f, "BUS clock frequency: %d MHz\n", getClockFrequency(ClockFrequencyType_Bus));
+	vita2d_pvf_draw_textf(font, 364, 505, RGBA8(51, 51, 51, 255), 1.1f, "GPU Xbar clock frequency: %d MHz\n\n", getClockFrequency(ClockFrequencyType_GpuXbar));
 }
 
 void batteryMenu()
 {
 	vita2d_pvf_draw_textf(font, 585, 225, RGBA8(0, 0, 0, 255), 1.1f, "Battery Menu");
 		
-	vita2d_pvf_draw_textf(font, 364, 265, RGBA8(77, 76, 74, 255), 1.1f, "Battery percentage: %s (%s)\n", getBatteryPercentage(), getBatteryStatus());
-	vita2d_pvf_draw_textf(font, 364, 305, RGBA8(77, 76, 74, 255), 1.1f, "Battery capacity: %s (remaining: %s)\n", getBatteryCapacity(), getBatteryRemainCapacity());
+	vita2d_pvf_draw_textf(font, 364, 265, RGBA8(51, 51, 51, 255), 1.1f, "Battery percentage: %s (%s)\n", getBatteryPercentage(), getBatteryStatus());
+	vita2d_pvf_draw_textf(font, 364, 305, RGBA8(51, 51, 51, 255), 1.1f, "Battery capacity: %s (remaining: %s)\n", getBatteryCapacity(), getBatteryRemainCapacity());
 	int batteryLifeTime = scePowerGetBatteryLifeTime();
-	vita2d_pvf_draw_textf(font, 364, 345, RGBA8(77, 76, 74, 255), 1.1f, "Battery life time: %02dh %02dm (SOH: %s)\n", batteryLifeTime/60, batteryLifeTime-(batteryLifeTime/60*60), getBatterySOH());
-	vita2d_pvf_draw_textf(font, 364, 385, RGBA8(77, 76, 74, 255), 1.1f, "Battery temperature: %s C (%s F)\n", getBatteryTemp(0), getBatteryTemp(1));
-	vita2d_pvf_draw_textf(font, 364, 425, RGBA8(77, 76, 74, 255), 1.1f, "Battery voltage: %s V (cycle count: %s)\n\n", getBatteryVoltage(), getBatteryCycleCount());
-	vita2d_pvf_draw_textf(font, 364, 465, RGBA8(77, 76, 74, 255), 1.1f, "Udcd state: %s (%s)\n", getUdcdCableState(), getUdcdChargingState());
+	vita2d_pvf_draw_textf(font, 364, 345, RGBA8(51, 51, 51, 255), 1.1f, "Battery life time: %02dh %02dm (SOH: %s)\n", batteryLifeTime/60, batteryLifeTime-(batteryLifeTime/60*60), getBatterySOH());
+	vita2d_pvf_draw_textf(font, 364, 385, RGBA8(51, 51, 51, 255), 1.1f, "Battery temperature: %s C (%s F)\n", getBatteryTemp(0), getBatteryTemp(1));
+	vita2d_pvf_draw_textf(font, 364, 425, RGBA8(51, 51, 51, 255), 1.1f, "Battery voltage: %s V (cycle count: %s)\n\n", getBatteryVoltage(), getBatteryCycleCount());
+	vita2d_pvf_draw_textf(font, 364, 465, RGBA8(51, 51, 51, 255), 1.1f, "Udcd state: %s (%s)\n", getUdcdCableState(), getUdcdChargingState());
 
 }
 
@@ -52,10 +52,10 @@ void miscMenu()
 {		
 	vita2d_pvf_draw_textf(font, 585, 225, RGBA8(0, 0, 0, 255), 1.1f, "Misc Menu");
 	
-	vita2d_pvf_draw_textf(font, 364, 265, RGBA8(77, 76, 74, 255), 1.1f, "Enter button: %s\n", getEnterButton());
+	vita2d_pvf_draw_textf(font, 364, 265, RGBA8(51, 51, 51, 255), 1.1f, "Enter button: %s\n", getEnterButton());
 	
-	vita2d_pvf_draw_textf(font, 364, 305, RGBA8(77, 76, 74, 255), 1.1f, "Brightness: %d%%\n",  getBrightness());
-	vita2d_pvf_draw_textf(font, 364, 345, RGBA8(77, 76, 74, 255), 1.1f, "Volume: %d%%\n",  getVolume());
+	vita2d_pvf_draw_textf(font, 364, 305, RGBA8(51, 51, 51, 255), 1.1f, "Brightness: %d%%\n",  getBrightness());
+	vita2d_pvf_draw_textf(font, 364, 345, RGBA8(51, 51, 51, 255), 1.1f, "Volume: %d%%\n",  getVolume());
 
 	char free_size_string[16], max_size_string[16];
 	SceOff freeSize = getPartitionInfo(0, "ur0:");
@@ -64,13 +64,13 @@ void miscMenu()
 	getSizeString(free_size_string, freeSize);
 	getSizeString(max_size_string, maxSize);
 
-	vita2d_pvf_draw_textf(font, 364, 385, RGBA8(77, 76, 74, 255), 1.1f, "Internal storage: %s\n", max_size_string);
-	vita2d_pvf_draw_textf(font, 364, 425, RGBA8(77, 76, 74, 255), 1.1f, "Internal storage free: %s\n", free_size_string);
+	vita2d_pvf_draw_textf(font, 364, 385, RGBA8(51, 51, 51, 255), 1.1f, "Internal storage: %s\n", max_size_string);
+	vita2d_pvf_draw_textf(font, 364, 425, RGBA8(51, 51, 51, 255), 1.1f, "Internal storage free: %s\n", free_size_string);
 	
 	if (vshRemovableMemoryGetCardInsertState() == 1)
 	{
-		vita2d_pvf_draw_textf(font, 364, 465, RGBA8(77, 76, 74, 255), 1.1f, "Memory card storage: %s\n", getStorageInfo(0));
-		vita2d_pvf_draw_textf(font, 364, 505, RGBA8(77, 76, 74, 255), 1.1f, "Memory card storage free: %s\n", getStorageInfo(1));	
+		vita2d_pvf_draw_textf(font, 364, 465, RGBA8(51, 51, 51, 255), 1.1f, "Memory card storage: %s\n", getStorageInfo(0));
+		vita2d_pvf_draw_textf(font, 364, 505, RGBA8(51, 51, 51, 255), 1.1f, "Memory card storage free: %s\n", getStorageInfo(1));	
 	}	
 }
 
@@ -140,7 +140,7 @@ int mainMenu()
 		if (MenuSelection == 1)
 		{
 			kernelMenu();
-			vita2d_pvf_draw_textf(font, 364, 265, RGBA8(77, 76, 74, 255), 1.1f, "Firmware version: %.4s\n", version);
+			vita2d_pvf_draw_textf(font, 364, 265, RGBA8(51, 51, 51, 255), 1.1f, "Firmware version: %.4s\n", version);
 		}
 		
 		else if (MenuSelection == 2)
