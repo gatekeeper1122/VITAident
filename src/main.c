@@ -44,7 +44,7 @@ void batteryMenu()
 	vita2d_pvf_draw_textf(font, 364, 345, RGBA8(51, 51, 51, 255), 1.1f, "Battery life time: %02dh %02dm (SOH: %s)\n", batteryLifeTime/60, batteryLifeTime-(batteryLifeTime/60*60), getBatterySOH());
 	vita2d_pvf_draw_textf(font, 364, 385, RGBA8(51, 51, 51, 255), 1.1f, "Battery temperature: %s C (%s F)\n", getBatteryTemp(0), getBatteryTemp(1));
 	vita2d_pvf_draw_textf(font, 364, 425, RGBA8(51, 51, 51, 255), 1.1f, "Battery voltage: %s V (cycle count: %s)\n\n", getBatteryVoltage(), getBatteryCycleCount());
-	vita2d_pvf_draw_textf(font, 364, 465, RGBA8(51, 51, 51, 255), 1.1f, "Udcd state: %s (%s)\n", getUdcdCableState(), getUdcdChargingState());
+	vita2d_pvf_draw_textf(font, 364, 465, RGBA8(51, 51, 51, 255), 1.1f, "Udcd state: %s (%s)\n", getUdcdCableState(), getUsbChargingState());
 
 }
 
