@@ -52,7 +52,7 @@ void miscMenu()
 {		
 	vita2d_pvf_draw_textf(font, 585, 225, RGBA8(0, 0, 0, 255), 1.1f, "Misc Menu");
 	
-	vita2d_pvf_draw_textf(font, 364, 265, RGBA8(51, 51, 51, 255), 1.1f, "Enter button: %s\n", getEnterButton());
+	vita2d_pvf_draw_textf(font, 364, 265, RGBA8(51, 51, 51, 255), 1.1f, "Enter button: %s\n", getEnterButton()? "Cross (X)" : "Circle (O)");
 	
 	vita2d_pvf_draw_textf(font, 364, 305, RGBA8(51, 51, 51, 255), 1.1f, "Brightness: %d%%\n",  getBrightness());
 	vita2d_pvf_draw_textf(font, 364, 345, RGBA8(51, 51, 51, 255), 1.1f, "Volume: %d%%\n",  getVolume());
@@ -152,8 +152,19 @@ int mainMenu()
 		else if (MenuSelection == 4) 
 			miscMenu();
 		
-		else if ((MenuSelection == 5) && (pressed & SCE_CTRL_CROSS))
-			sceKernelExitProcess(0);
+		else if (MenuSelection == 5)
+		{
+			if (getEnterButton() == 0)
+			{
+				if (pressed & SCE_CTRL_CIRCLE)
+					sceKernelExitProcess(0);
+			}
+			else
+			{
+				if (pressed & SCE_CTRL_CROSS)
+					sceKernelExitProcess(0);
+			}
+		}
 		
 		endDrawing();
 	}	
@@ -185,9 +196,7 @@ int main(int argc, char *argv[])
 	font = vita2d_load_default_pvf();
 	
 	while(1)
-	{
         mainMenu();
-	}
 	
 	vita2d_fini();
 	vita2d_free_texture(VITAident);

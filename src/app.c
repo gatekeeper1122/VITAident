@@ -72,13 +72,13 @@ char * getStorageInfo(int type)
 		return free_size_string;
 }
 
-const char * getEnterButton()
+int getEnterButton() // Circle = 0, cross = 1
 {
 	int enterButton;
-    sceAppUtilSystemParamGetInt(SCE_SYSTEM_PARAM_ID_ENTER_BUTTON, &enterButton);
-    
+	sceAppUtilSystemParamGetInt(SCE_SYSTEM_PARAM_ID_ENTER_BUTTON, &enterButton);
+	
 	if (enterButton == SCE_SYSTEM_PARAM_ENTER_BUTTON_CIRCLE)
-		return "Circle (O)";
-	else 
-		return "Cross (X)";
+		return 0;
+	else
+		return 1;
 }

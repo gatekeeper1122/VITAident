@@ -13,6 +13,6 @@ void termAppUtil();
 SceChar8 * getUser();
 const char * getLang();
 char * getStorageInfo(int type);
-const char * getEnterButton();
+int getEnterButton();
 
 #endif
