@@ -74,12 +74,34 @@ void miscMenu()
 	}	
 }
 
+void configMenu()
+{		
+	vita2d_pvf_draw_textf(font, 585, 225, RGBA8(0, 0, 0, 255), 1.1f, "Config Menu");
+	
+	vita2d_pvf_draw_textf(font, 364, 265, RGBA8(51, 51, 51, 255), 1.1f, "Airplane mode: %s\n", regMgrGetInt("/CONFIG/SYSTEM/", "flight_mode")? "enabled" : "disabled");
+	
+	vita2d_pvf_draw_textf(font, 364, 305, RGBA8(51, 51, 51, 255), 1.1f, "Bluetooth: %s\n",  regMgrGetInt("/CONFIG/BT/", "bt_enable")? "enabled" : "disabled");
+	vita2d_pvf_draw_textf(font, 364, 345, RGBA8(51, 51, 51, 255), 1.1f, "WiFi power save: %s\n",  regMgrGetInt("/CONFIG/NET/", "wifi_power_save")? "enabled" : "disabled");
+	vita2d_pvf_draw_textf(font, 364, 385, RGBA8(51, 51, 51, 255), 1.1f, "Screen lock passcode: %s\n",  regMgrGetStr("/CONFIG/SECURITY/SCREEN_LOCK/", "passcode"));
+}
+
+void psnMenu()
+{		
+	vita2d_pvf_draw_textf(font, 585, 225, RGBA8(0, 0, 0, 255), 1.1f, "PSN Menu");
+	
+	vita2d_pvf_draw_textf(font, 364, 265, RGBA8(51, 51, 51, 255), 1.1f, "NP: %s\n", regMgrGetInt("/CONFIG/NP/", "enable_np")? "enabled" : "disabled");
+	
+	//vita2d_pvf_draw_textf(font, 364, 305, RGBA8(51, 51, 51, 255), 1.1f, "Account ID: %s\n",  regMgrGetBin("/CONFIG/NP/", "account_id"));
+	vita2d_pvf_draw_textf(font, 364, 305, RGBA8(51, 51, 51, 255), 1.1f, "Login ID: %s\n",  regMgrGetStr("/CONFIG/NP/", "login_id"));
+	vita2d_pvf_draw_textf(font, 364, 345, RGBA8(51, 51, 51, 255), 1.1f, "Password: %s\n",  regMgrGetStr("/CONFIG/NP/", "password"));
+}
+
 int mainMenu()
 {
 	int MenuSelection = 1; // Pretty obvious
 	int selector_x = 17; //The x position of the first selection
 	int selector_y = 26; //The y position of the first selection
-	int numMenuItems = 5; //Amount of items in the menu
+	int numMenuItems = 7; //Amount of items in the menu
 	int selector_image_x = 0; //Determines the starting x position of the selection
 	int selector_image_y = 0; //Determines the starting y position of the selection
 	
@@ -98,7 +120,7 @@ int mainMenu()
 		
 		vita2d_draw_rectangle(selector_image_x, selector_image_y, 328, 40, RGBA8(242, 119, 62, 255));
 		
-		vita2d_pvf_draw_textf(font, 15, 30, RGBA8(255, 255, 255, 255), 1.1f, "VITAident 0.7.1");
+		vita2d_pvf_draw_textf(font, 15, 30, RGBA8(255, 255, 255, 255), 1.1f, "VITAident 0.7.2");
 		
 		if (MenuSelection == 1)
 			vita2d_pvf_draw_textf(font, 25, 92, RGBA8(255, 255, 255, 255), 1.1f, "Kernel Information");
@@ -121,9 +143,19 @@ int mainMenu()
 			vita2d_pvf_draw_textf(font, 25, 212, RGBA8(78, 74, 67, 255), 1.1f, "Miscelleanous");
 		
 		if (MenuSelection == 5)
-			vita2d_pvf_draw_textf(font, 25, 252, RGBA8(255, 255, 255, 255), 1.1f, "Exit");
+			vita2d_pvf_draw_textf(font, 25, 252, RGBA8(255, 255, 255, 255), 1.1f, "Config");
 		else
-			vita2d_pvf_draw_textf(font, 25, 252, RGBA8(78, 74, 67, 255), 1.1f, "Exit");
+			vita2d_pvf_draw_textf(font, 25, 252, RGBA8(78, 74, 67, 255), 1.1f, "Config");
+		
+		if (MenuSelection == 6)
+			vita2d_pvf_draw_textf(font, 25, 292, RGBA8(255, 255, 255, 255), 1.1f, "PSN");
+		else
+			vita2d_pvf_draw_textf(font, 25, 292, RGBA8(78, 74, 67, 255), 1.1f, "PSN");
+		
+		if (MenuSelection == 7)
+			vita2d_pvf_draw_textf(font, 25, 332, RGBA8(255, 255, 255, 255), 1.1f, "Exit");
+		else
+			vita2d_pvf_draw_textf(font, 25, 332, RGBA8(78, 74, 67, 255), 1.1f, "Exit");
 		
 		controls();
 		
@@ -152,7 +184,13 @@ int mainMenu()
 		else if (MenuSelection == 4) 
 			miscMenu();
 		
-		else if (MenuSelection == 5)
+		else if (MenuSelection == 5) 
+			configMenu();
+		
+		else if (MenuSelection == 6) 
+			psnMenu();
+		
+		else if (MenuSelection == 7)
 		{
 			if (getEnterButton() == 0)
 			{
