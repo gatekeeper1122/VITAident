@@ -106,26 +106,28 @@ char * getUnit()
 
 const char * getDeviceModel()
 {
-	if ((vshSblAimgrIsCEX()) && (!vshSblAimgrIsTool()) && (!vshSblAimgrIsTest()) && (!vshSblAimgrIsDEX()) && (vshSblAimgrIsGenuineVITA()))
+	if (isPCHX000)
 		return concat("PCH-", getVitaModel());
-	else if ((vshSblAimgrIsCEX()) && (!vshSblAimgrIsTool()) && (!vshSblAimgrIsTest()) && (!vshSblAimgrIsDEX()) && (vshSblAimgrIsGenuineDolce()))
-		return "VTE-1000";
-	else if ((!vshSblAimgrIsCEX()) && (!vshSblAimgrIsTool()) && (!vshSblAimgrIsTest()) && (vshSblAimgrIsDEX()) && (vshSblAimgrIsGenuineVITA()))
-		return concat("PTEL-", getVitaModel());
-	else if ((!vshSblAimgrIsCEX()) && (!vshSblAimgrIsTest()) && (!vshSblAimgrIsDEX()) && (vshSblAimgrIsGenuineVITA()) && (vshSblAimgrIsTool()))
+	else if (isPDEL)
 		return concat("PDEL-", getVitaModel());
+	else if (isPTEL)
+		return concat("PTEL-", getVitaModel());
+	else if (isVTE1000)
+		return "VTE-1000";
 	else
 		return "Uknown";
 }
 
 const char * getBoard()
 {
-	if (strcmp(getVitaModel(), "2000") == 0)
+	if ((isPCHX000) && (strcmp(getVitaModel(), "2000") == 0))
 		return "USS-1001";
-	else if (strcmp(getVitaModel(), "1000") == 0)
+	else if ((isPCHX000) && (strcmp(getVitaModel(), "1000") == 0))
 		return "IRS-002";
-	else if(vshSblAimgrIsGenuineDolce())
+	else if(isVTE1000)
 		return "DOL-1001";
+	else if (isPDEL)
+		return "IRT-002";
 	else
 		return "Uknown";
 }
