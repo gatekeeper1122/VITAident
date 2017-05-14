@@ -3,16 +3,13 @@
 
 #include <psp2/display.h>
 #include <psp2/io/fcntl.h>
+#include <psp2/registrymgr.h>
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include <vita2d.h>
-
-int sceRegMgrGetKeyInt(const char* category, const char* name, int* buf);
-int sceRegMgrGetKeyStr(const char* category, const char* name, char* buf, const int size); 
-int sceRegMgrGetKeyBin(const char *category, const char *name, void *buf, int size);
 
 int getVolume();
 int getBrightness();
