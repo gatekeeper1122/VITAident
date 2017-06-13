@@ -121,7 +121,7 @@ int mainMenu()
 		
 		vita2d_draw_rectangle(selector_image_x, selector_image_y, 328, 40, RGBA8(242, 119, 62, 255));
 		
-		vita2d_pvf_draw_textf(font, 15, 30, RGBA8(255, 255, 255, 255), 1.1f, "VITAident 0.7.2");
+		vita2d_pvf_draw_textf(font, 15, 30, RGBA8(255, 255, 255, 255), 1.1f, "VITAident 0.7.3");
 		
 		if (MenuSelection == 1)
 			vita2d_pvf_draw_textf(font, 25, 92, RGBA8(255, 255, 255, 255), 1.1f, "Kernel Information");
