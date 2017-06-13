@@ -94,7 +94,7 @@ void psnMenu()
 	//vita2d_pvf_draw_textf(font, 364, 305, RGBA8(51, 51, 51, 255), 1.1f, "Account ID: %s\n",  regMgrGetBin("/CONFIG/NP/", "account_id"));
 	vita2d_pvf_draw_textf(font, 364, 305, RGBA8(51, 51, 51, 255), 1.1f, "Login ID: %s\n",  regMgrGetStr("/CONFIG/NP/", "login_id"));
 	vita2d_pvf_draw_textf(font, 364, 345, RGBA8(51, 51, 51, 255), 1.1f, "Password: %s\n",  regMgrGetStr("/CONFIG/NP/", "password"));
-	vita2d_pvf_draw_textf(font, 364, 505, RGBA8(0, 0, 0, 255), 1.1f, "Press (X) to dump your CID into ux0:/ %s", (fileExists("ux0:/cid.txt"))? "(Dumped)" : "");
+	vita2d_pvf_draw_textf(font, 364, 505, RGBA8(51, 51, 51, 255), 1.1f, "Press X to dump your CID into ux0:/ %s", (fileExists("ux0:/cid.txt"))? "(Dumped)" : "");
 }
 
 int mainMenu()
