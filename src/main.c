@@ -10,7 +10,7 @@ extern unsigned char _binary_res_VITAident_png_start;
 
 void kernelMenu()
 {		
-	vita2d_pvf_draw_textf(font, 585, 225, RGBA8(0, 0, 0, 255), 1.1f, "Kernel Menu");
+	vita2d_pvf_draw_textf(font, (((616 - vita2d_pvf_text_width(font, 1.1f, "Kernel Menu")) / 2) + 344), 225, RGBA8(0, 0, 0, 255), 1.1f, "Kernel Menu");
 		
 	//vita2d_pvf_draw_textf(font, 364, 265, RGBA8(51, 51, 51, 255), 1.1f, "Firmware version: %.4s\n", getFwVersion(false));
 	vita2d_pvf_draw_textf(font, 364, 305, RGBA8(51, 51, 51, 255), 1.1f, "System version: %.4s\n", getFwVersion(true));
@@ -23,7 +23,7 @@ void kernelMenu()
 
 void systemMenu()
 {
-	vita2d_pvf_draw_textf(font, 585, 225, RGBA8(0, 0, 0, 255), 1.1f, "System Menu");
+	vita2d_pvf_draw_textf(font, (((616 - vita2d_pvf_text_width(font, 1.1f, "System Menu")) / 2) + 344), 225, RGBA8(0, 0, 0, 255), 1.1f, "System Menu");
 		
 	vita2d_pvf_draw_textf(font, 364, 265, RGBA8(51, 51, 51, 255), 1.1f, "Language: %s\n", getLang());
 	vita2d_pvf_draw_textf(font, 364, 305, RGBA8(51, 51, 51, 255), 1.1f, "MAC address: %s\n", getMacAddress());
@@ -36,7 +36,7 @@ void systemMenu()
 
 void batteryMenu()
 {
-	vita2d_pvf_draw_textf(font, 585, 225, RGBA8(0, 0, 0, 255), 1.1f, "Battery Menu");
+	vita2d_pvf_draw_textf(font, (((616 - vita2d_pvf_text_width(font, 1.1f, "Battery Menu")) / 2) + 344), 225, RGBA8(0, 0, 0, 255), 1.1f, "Battery Menu");
 		
 	vita2d_pvf_draw_textf(font, 364, 265, RGBA8(51, 51, 51, 255), 1.1f, "Battery percentage: %s (%s)\n", getBatteryPercentage(), getBatteryStatus());
 	vita2d_pvf_draw_textf(font, 364, 305, RGBA8(51, 51, 51, 255), 1.1f, "Battery capacity: %s (remaining: %s)\n", getBatteryCapacity(), getBatteryRemainCapacity());
@@ -50,7 +50,7 @@ void batteryMenu()
 
 void miscMenu()
 {		
-	vita2d_pvf_draw_textf(font, 585, 225, RGBA8(0, 0, 0, 255), 1.1f, "Misc Menu");
+	vita2d_pvf_draw_textf(font, (((616 - vita2d_pvf_text_width(font, 1.1f, "Misc Menu")) / 2) + 344), 225, RGBA8(0, 0, 0, 255), 1.1f, "Misc Menu");
 	
 	vita2d_pvf_draw_textf(font, 364, 265, RGBA8(51, 51, 51, 255), 1.1f, "Enter button: %s\n", getEnterButton()? "Cross (X)" : "Circle (O)");
 	
@@ -76,7 +76,7 @@ void miscMenu()
 
 void configMenu()
 {		
-	vita2d_pvf_draw_textf(font, 585, 225, RGBA8(0, 0, 0, 255), 1.1f, "Config Menu");
+	vita2d_pvf_draw_textf(font, (((616 - vita2d_pvf_text_width(font, 1.1f, "Config Menu")) / 2) + 344), 225, RGBA8(0, 0, 0, 255), 1.1f, "Config Menu");
 	
 	vita2d_pvf_draw_textf(font, 364, 265, RGBA8(51, 51, 51, 255), 1.1f, "Airplane mode: %s\n", regMgrGetInt("/CONFIG/SYSTEM/", "flight_mode")? "enabled" : "disabled");
 	
@@ -87,13 +87,14 @@ void configMenu()
 
 void psnMenu()
 {		
-	vita2d_pvf_draw_textf(font, 585, 225, RGBA8(0, 0, 0, 255), 1.1f, "PSN Menu");
+	vita2d_pvf_draw_textf(font, (((616 - vita2d_pvf_text_width(font, 1.1f, "PSN Menu")) / 2) + 344), 225, RGBA8(0, 0, 0, 255), 1.1f, "PSN Menu");
 	
 	vita2d_pvf_draw_textf(font, 364, 265, RGBA8(51, 51, 51, 255), 1.1f, "NP: %s\n", regMgrGetInt("/CONFIG/NP/", "enable_np")? "enabled" : "disabled");
 	
 	//vita2d_pvf_draw_textf(font, 364, 305, RGBA8(51, 51, 51, 255), 1.1f, "Account ID: %s\n",  regMgrGetBin("/CONFIG/NP/", "account_id"));
 	vita2d_pvf_draw_textf(font, 364, 305, RGBA8(51, 51, 51, 255), 1.1f, "Login ID: %s\n",  regMgrGetStr("/CONFIG/NP/", "login_id"));
 	vita2d_pvf_draw_textf(font, 364, 345, RGBA8(51, 51, 51, 255), 1.1f, "Password: %s\n",  regMgrGetStr("/CONFIG/NP/", "password"));
+	vita2d_pvf_draw_textf(font, 364, 505, RGBA8(0, 0, 0, 255), 1.1f, "Press (X) to dump your CID into ux0:/ %s", (fileExists("ux0:/cid.txt"))? "(Dumped)" : "");
 }
 
 int mainMenu()
@@ -188,7 +189,16 @@ int mainMenu()
 			configMenu();
 		
 		else if (MenuSelection == 6) 
+		{
 			psnMenu();
+			
+			if (pressed & SCE_CTRL_CROSS)
+			{
+				char buf[32];
+				strcpy(buf, getCID());
+				writeFile("ux0:/cid.txt", buf, strlen(buf) + 1);
+			}	
+		}
 		
 		else if (MenuSelection == 7)
 		{
