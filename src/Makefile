@@ -18,7 +18,7 @@ LIBS := -lvita2d -lSceDisplay_stub -lSceGxm_stub \
 		-lSceCommonDialog_stub -lfreetype -lpng -ljpeg -lz -lm -lc \
 		-lSceAppMgr_stub -lSceAppUtil_stub \
 		-lSceLibKernel_stub -lSceNet_stub -lSceNetCtl_stub -lScePower_stub  -lSceVshBridge_stub \
-		-lSceRegistryMgr_stub -lSceUdcd_stub -lSceUsbstorVStorDriver_stub 
+		-lSceAVConfig_stub -lSceRegistryMgr_stub -lSceUdcd_stub -lSceUsbstorVStorDriver_stub 
 		#-lSceSysmemForDriver_stub
 
 all: $(TARGET).vpk

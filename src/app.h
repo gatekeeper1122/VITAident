@@ -8,11 +8,11 @@
 #include <stdio.h>
 #include <string.h>
 
-void initAppUtil();
-void termAppUtil();
-SceChar8 * getUser();
-const char * getLang();
+void initAppUtil(void);
+void termAppUtil(void);
+SceChar8 * getUser(void);
+const char * getLang(void);
 char * getStorageInfo(int type);
-int getEnterButton();
+int getEnterButton(void);
 
 #endif

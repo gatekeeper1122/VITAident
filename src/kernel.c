@@ -9,49 +9,48 @@ char * getFwVersion(bool spoofed)
 	
 	if (spoofed == true)
 	{
-		SceSystemSwVersionParam param;
-		param.size = sizeof(SceSystemSwVersionParam);
-		sceKernelGetSystemSwVersion(&param);
+		SceKernelFwInfo info;
+		info.size = sizeof(SceKernelFwInfo);
+		sceKernelGetSystemSwVersion(&info);
 	
-		sprintf(version, "%s", param.version_string);
-	}
-	
-	else
-	{
-		SceUID file = sceIoOpen("os0:psp2bootconfig.skprx", SCE_O_RDONLY, 0777);
-	
-		if(file < 0)
-			return "Unknown firmware";
-	
-		sceIoLseek(file, 146, SCE_SEEK_SET);
-		sceIoRead(file, &str, 8);
-		sceIoClose(file);
+		snprintf(version, 16, "%s", info.versionString);
 		
-		sprintf(version, "%x.%02x", str[3], str[2]);
+		return version;
 	}
+	
+	SceUID file = sceIoOpen("os0:psp2bootconfig.skprx", SCE_O_RDONLY, 0777);
+	
+	if(file < 0)
+		return "Unknown firmware";
+	
+	sceIoLseek(file, 146, SCE_SEEK_SET);
+	sceIoRead(file, &str, 8);
+	sceIoClose(file);
+		
+	snprintf(version, 8, "%x.%02x", str[3], str[2]);
 	
 	return version;
 }
 
-char getHenkakuVersion()
+char getHenkakuVersion(void)
 {
 	char henkakuVersion[10];
 	
-	SceSystemSwVersionParam param;
-	param.size = sizeof(SceSystemSwVersionParam);
-	sceKernelGetSystemSwVersion(&param);
+	SceKernelFwInfo info;
+	info.size = sizeof(SceKernelFwInfo);
+	sceKernelGetSystemSwVersion(&info);
 	
-	strcpy(henkakuVersion, (char *) param.version_string);
+	strcpy(henkakuVersion, (char *)info.versionString);
 	
 	return henkakuVersion[(strlen(henkakuVersion) - 1)];
 }
 
-int getModel()
+int getModel(void)
 {
 	return sceKernelGetModelForCDialog();
 }
 
-char * getCID()
+char * getCID(void)
 {
 	char CID[32];
 	static char idps[32];
@@ -66,7 +65,7 @@ char * getCID()
 	return idps;
 }
 
-SceKernelOpenPsId getPSID()
+SceKernelOpenPsId getPSID(void)
 {
 	SceKernelOpenPsId id;
 	sceKernelGetOpenPsId(&id);
@@ -74,7 +73,7 @@ SceKernelOpenPsId getPSID()
 	return id;
 }
 
-char * getUnit()
+char * getUnit(void)
 {
 	if ((vshSblAimgrIsGenuineVITA() | vshSblAimgrIsGenuineDolce()) && (vshSblAimgrIsCEX()))
 		return "CEX unit";
@@ -90,7 +89,7 @@ char * getUnit()
 		return "PS Vita TV"; //Because it returns NULL running on a VITA TV
 }
 
-const char * getDeviceModel()
+const char * getDeviceModel(void)
 {
 	if (isPCHX000)
 		return concat("PCH-", getVitaModel());
@@ -104,7 +103,7 @@ const char * getDeviceModel()
 		return "Uknown";
 }
 
-const char * getBoard()
+const char * getBoard(void)
 {
 	if ((isPCHX000) && (strcmp(getVitaModel(), "2000") == 0))
 		return "USS-1001";
@@ -117,40 +116,3 @@ const char * getBoard()
 	else
 		return "Uknown";
 }
-
-/*
-
-const char * getSysrootKernelModes(int data)
-{
-	if (data == 0) //ksceSysrootIsExternalBootMode
-	{
-		if (ksceSysrootIsExternalBootMode() == 0)
-			return "boot mode enabled";
-		else 
-			return "boot mode disabled";
-	}
-	
-	else if (data == 1) //ksceSysrootIsManufacturingMode
-	{
-		if (ksceSysrootIsManufacturingMode() == 0)
-			return "manufacturing mode enabled";
-		else 
-			return "manufacturing mode disabled";
-	}
-	
-	else if (data == 2) //ksceSysrootIsSafeMode
-	{
-		if (ksceSysrootIsSafeMode() == 0)
-			return "safe mode enabled";
-		else 
-			return "safe mode disabled";
-	}
-	
-	else //ksceSysrootIsUpdateMode
-	{
-		if (ksceSysrootIsUpdateMode() == 0)
-			return "update mode enabled";
-		else 
-			return "update mode disabled";
-	}
-}*/

@@ -7,31 +7,28 @@
 #include <stdio.h>
 #include <string.h>
 
-typedef enum {
-	ClockFrequencyType_Cpu = 0,
-	ClockFrequencyType_Bus,
-	ClockFrequencyType_Gpu,
-	ClockFrequencyType_GpuXbar
-} ClockFrequencyType;
+typedef enum 
+{
+	clockFrequencyType_cpu,
+	clockFrequencyType_bus,
+	clockFrequencyType_gpu,
+	clockFrequencyType_gpuXbar
+} clockFrequencyType;
 
-int scePowerGetBatteryCycleCount();
-//int scePowerGetBatteryElec(); Crashes the VITA
-int scePowerGetUsingWireless();
+//int scePowerGetBatteryElec(void); Crashes the VITA
+int scePowerGetUsingWireless(void);
 
-int scePowerGetGpuXbarClockFrequency();
-
-int getClockFrequency(ClockFrequencyType type);
-const char * getBatteryStatus();
-char * getBatteryPercentage();
-//char * getBatteryElec();
-char * getUsingWireless();
-char * getBatterySOH();
-char * getBatteryCycleCount();
-char * getBatteryCapacity();
-char * getBatteryRemainCapacity();
+int getClockFrequency(clockFrequencyType type);
+const char * getBatteryStatus(void);
+char * getBatteryPercentage(void);
+char * getUsingWireless(void);
+char * getBatterySOH(void);
+char * getBatteryCycleCount(void);
+char * getBatteryCapacity(void);
+char * getBatteryRemainCapacity(void);
 char * getBatteryTemp(int type);
-char * getBatteryVoltage();
-char * getUdcdCableState();
-char * getUsbChargingState();
+char * getBatteryVoltage(void);
+char * getUdcdCableState(void);
+char * getUsbChargingState(void);
 
 #endif

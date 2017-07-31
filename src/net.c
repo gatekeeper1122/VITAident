@@ -1,6 +1,6 @@
 #include "net.h"
 
-void initNet()
+void initNet(void)
 {
 	if (sceSysmoduleIsLoaded(SCE_SYSMODULE_NET) != SCE_SYSMODULE_LOADED)
 		sceSysmoduleLoadModule(SCE_SYSMODULE_NET);
@@ -16,25 +16,25 @@ void initNet()
 	sceNetCtlInit();
 }
 
-void termNet()
+void termNet(void)
 {
 	sceNetCtlTerm();
 	sceNetTerm();
 }
 
-char * getMacAddress()
+char * getMacAddress(void)
 {	
 	SceNetEtherAddr mac;
 	sceNetGetMacAddress(&mac, 0);
 
 	static char macAddress[32];
 	
-	sprintf(macAddress, "%02X:%02X:%02X:%02X:%02X:%02X", mac.data[0], mac.data[1], mac.data[2], mac.data[3], mac.data[4], mac.data[5]);
+	snprintf(macAddress, 32, "%02X:%02X:%02X:%02X:%02X:%02X", mac.data[0], mac.data[1], mac.data[2], mac.data[3], mac.data[4], mac.data[5]);
 
 	return macAddress;
 }
 
-char * getIP()
+char * getIP(void)
 {
 	static char address[16];
 

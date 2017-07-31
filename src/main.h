@@ -10,11 +10,11 @@
 
 #include <vita2d.h>
 
-#define selector_xDistance 0 //The distance between the X axis of the two selections
-#define selector_yDistance 40 //The distance between the Y axis of the two selections
+#define selector_yDistance 40 // The distance between the Y axis of the two selections
+#define MAX_ITEMS 7
 
-vita2d_texture *VITAident;
-vita2d_pvf *font;
+vita2d_texture * VITAident;
+vita2d_pvf * font;
 
 SceCtrlData pad, old_pad;
 unsigned int pressed;

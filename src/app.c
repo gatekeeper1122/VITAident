@@ -1,7 +1,7 @@
 #include "app.h"
 #include "utils.h"
 
-void initAppUtil()
+void initAppUtil(void)
 {
 	SceAppUtilInitParam init;
 	SceAppUtilBootParam boot;
@@ -10,12 +10,12 @@ void initAppUtil()
 	sceAppUtilInit(&init, &boot);
 }
 
-void termAppUtil()
+void termAppUtil(void)
 {
 	sceAppUtilShutdown();
 }
 
-SceChar8 * getUser()
+SceChar8 * getUser(void)
 {
 	static SceChar8 userName[SCE_SYSTEM_PARAM_USERNAME_MAXSIZE];
 	sceAppUtilSystemParamGetString(SCE_SYSTEM_PARAM_ID_USERNAME, userName, SCE_SYSTEM_PARAM_USERNAME_MAXSIZE);
@@ -23,7 +23,7 @@ SceChar8 * getUser()
 	return userName;
 }
 
-const char * getLang()
+const char * getLang(void)
 {
 	const char *languages[] = 
 	{
@@ -72,13 +72,13 @@ char * getStorageInfo(int type)
 		return free_size_string;
 }
 
-int getEnterButton() // Circle = 0, cross = 1
+int getEnterButton(void) // Circle = 0, cross = 1
 {
-	int enterButton;
+	int enterButton = 0;
 	sceAppUtilSystemParamGetInt(SCE_SYSTEM_PARAM_ID_ENTER_BUTTON, &enterButton);
 	
 	if (enterButton == SCE_SYSTEM_PARAM_ENTER_BUTTON_CIRCLE)
 		return 0;
-	else
-		return 1;
+	
+	return 1;
 }

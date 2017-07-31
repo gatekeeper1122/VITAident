@@ -1,26 +1,26 @@
 #include "utils.h"
 
-int getVolume()
+int getVolume(void)
 {
-	int calculatedVolume = 0;
-	int volume = regMgrGetInt("/CONFIG/SOUND/", "main_volume");
+	int volume = 0;
+	int sceVolume = regMgrGetInt("/CONFIG/SOUND/", "main_volume");
 	
-	calculatedVolume = (volume * 3.33333333);
+	volume = (sceVolume * 3.33333333);
 	
-	if (calculatedVolume == 99)
-		calculatedVolume = 100;
+	if (volume == 99)
+		volume = 100;
 	
-	return calculatedVolume;
+	return volume;
 }
 
-int getBrightness()
+int getBrightness(void)
 {
-	int calculatedBrightness = 0;
-	int brightness = regMgrGetInt("/CONFIG/DISPLAY/", "brightness");
+	int brightness = 0;
+	int sceBrightness = regMgrGetInt("/CONFIG/DISPLAY/", "brightness");
 	
-	calculatedBrightness = (brightness * 0.00152590219);
+	brightness = (sceBrightness * 0.00152590219);
 	
-	return calculatedBrightness;
+	return brightness;
 }
 
 int regMgrGetInt(const char * category, const char * name)
@@ -61,7 +61,7 @@ vita2d_texture * loadPngWithFilter(const void *buffer)
 	return texture;
 }
 
-void endDrawing() 
+void endDrawing(void) 
 {
 	vita2d_end_drawing();
 	vita2d_common_dialog_update();
@@ -69,13 +69,15 @@ void endDrawing()
 	sceDisplayWaitVblankStart();
 }
 
-void getSizeString(char *string, uint64_t size) //Thanks TheOfficialFloW
+void getSizeString(char * string, uint64_t size) //Thanks TheOfficialFloW
 {
 	double double_size = (double)size;
 
 	int i = 0;
-	static char *units[] = { "B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
-	while (double_size >= 1024.0f) {
+	static char * units[] = { "B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
+	
+	while (double_size >= 1024.0f) 
+	{
 		double_size /= 1024.0f;
 		i++;
 	}
@@ -83,27 +85,11 @@ void getSizeString(char *string, uint64_t size) //Thanks TheOfficialFloW
 	sprintf(string, "%.*f %s", (i == 0) ? 0 : 2, double_size, units[i]);
 }
 
-const char * concat(char* s1, char* s2)
+const char * concat(char * s1, char * s2)
 {
-    char *ns = malloc(strlen(s1) + strlen(s2) + 1);
+    char * ns = malloc(strlen(s1) + strlen(s2) + 1);
     ns[0] = '\0';
     strcat(ns, s1);
     strcat(ns, s2);
     return ns;
-}
-
-char * readID_dat()
-{
-	SceUID file;
-	static char writePath[250];
-	char str[256];
-	
-	file = sceIoOpen("ux0:id.dat", SCE_O_RDONLY, 0777);
-	
-	sceIoLseek(file, 0, SCE_SEEK_SET);
-	sceIoRead(file, &str, 187);
-		
-	sprintf(writePath, "%s", str);
-	
-	return writePath;
 }
