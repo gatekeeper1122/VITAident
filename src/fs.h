@@ -7,10 +7,10 @@
 
 #include <string.h>
 
-int fileExists(const char * path);
-int dirExists(const char * path);
-int writeFile(char * file, void * buf, int size);
-SceOff getPartitionInfo(int storage, const char * partition);
-char * getVitaModel(void);
+SceInt fileExists(const char * path);
+SceInt dirExists(const char * path);
+SceInt writeFile(char * file, SceVoid * buf, SceInt size);
+SceOff getPartitionInfo(SceInt storage, const char * partition);
+char * getVitaModel(SceVoid);
 
 #endif

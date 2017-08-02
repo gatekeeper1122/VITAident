@@ -7,7 +7,6 @@
 #include <psp2/kernel/sysmem.h>
 
 #include <stdio.h>
-#include <stdbool.h>
 #include <string.h>
 
 #define isPCHX000 ((vshSblAimgrIsCEX()) && (!vshSblAimgrIsTool()) && (!vshSblAimgrIsTest()) && (!vshSblAimgrIsDEX()) && (vshSblAimgrIsGenuineVITA()))
@@ -15,31 +14,31 @@
 #define isPDEL ((!vshSblAimgrIsCEX()) && (!vshSblAimgrIsTest()) && (!vshSblAimgrIsDEX()) && (vshSblAimgrIsGenuineVITA()) && (vshSblAimgrIsTool()))
 #define isPTEL ((!vshSblAimgrIsCEX()) && (!vshSblAimgrIsTool()) && (!vshSblAimgrIsTest()) && (vshSblAimgrIsDEX()) && (vshSblAimgrIsGenuineVITA()))
 
-int _vshSblAimgrGetConsoleId(char CID[32]);
-int _vshAppMgrCloudDataGetMcId(char mCID[32]);
+SceInt _vshSblAimgrGetConsoleId(char CID[32]);
+SceInt _vshAppMgrCloudDataGetMcId(char mCID[32]);
 
-int vshSblAimgrIsCEX(void);
-int vshSblAimgrIsDEX(void);
-int vshSblAimgrIsGenuineVITA(void);
-int vshSblAimgrIsGenuineDolce(void);
-int vshSblAimgrIsTest(void);
-int vshSblAimgrIsTool(void);
+SceInt vshSblAimgrIsCEX(SceVoid);
+SceInt vshSblAimgrIsDEX(SceVoid);
+SceInt vshSblAimgrIsGenuineVITA(SceVoid);
+SceInt vshSblAimgrIsGenuineDolce(SceVoid);
+SceInt vshSblAimgrIsTest(SceVoid);
+SceInt vshSblAimgrIsTool(SceVoid);
 
-int vshSysconIsIduMode(void);
-int vshSysconIsShowMode(void);
-int vshSysconHasWWAN(void);
+SceInt vshSysconIsIduMode(SceVoid);
+SceInt vshSysconIsShowMode(SceVoid);
+SceInt vshSysconHasWWAN(SceVoid);
 
-int vshRemovableMemoryGetCardInsertState(void);
+SceInt vshRemovableMemoryGetCardInsertState(SceVoid);
 
-char * getFwVersion(bool spoofed);
-char getHenkakuVersion(void);
-int getModel(void);
-char * getCID(void);
-char * getmCID(void);
-SceKernelOpenPsId getPSID(void);
-char * getUnit(void);
-const char * getDeviceModel(void);
-const char * getBoard(void);
-const char * getSysrootKernelModes(int data);
+char * getFwVersion(SceBool spoofed);
+char getHenkakuVersion(SceVoid);
+SceInt getModel(SceVoid);
+char * getCID(SceVoid);
+char * getmCID(SceVoid);
+SceKernelOpenPsId getPSID(SceVoid);
+char * getUnit(SceVoid);
+const char * getDeviceModel(SceVoid);
+const char * getBoard(SceVoid);
+const char * getSysrootKernelModes(SceInt data);
 
 #endif

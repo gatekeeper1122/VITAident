@@ -1,9 +1,9 @@
 #include "utils.h"
 
-int getVolume(void)
+SceInt getVolume(SceVoid)
 {
-	int volume = 0;
-	int sceVolume = regMgrGetInt("/CONFIG/SOUND/", "main_volume");
+	SceInt volume = 0;
+	SceInt sceVolume = regMgrGetInt("/CONFIG/SOUND/", "main_volume");
 	
 	volume = (sceVolume * 3.33333333);
 	
@@ -13,21 +13,21 @@ int getVolume(void)
 	return volume;
 }
 
-int getBrightness(void)
+SceInt getBrightness(SceVoid)
 {
-	int brightness = 0;
-	int sceBrightness = regMgrGetInt("/CONFIG/DISPLAY/", "brightness");
+	SceInt brightness = 0;
+	SceInt sceBrightness = regMgrGetInt("/CONFIG/DISPLAY/", "brightness");
 	
 	brightness = (sceBrightness * 0.00152590219);
 	
 	return brightness;
 }
 
-int regMgrGetInt(const char * category, const char * name)
+SceInt regMgrGetInt(const char * category, const char * name)
 {
 	int value = -1;
 	
-	int ret = sceRegMgrGetKeyInt(category, name, &value);
+	SceInt ret = sceRegMgrGetKeyInt(category, name, &value);
 	
 	if (ret < 0)
 		return 0;
@@ -39,7 +39,7 @@ char * regMgrGetStr(const char* category, const char* name)
 {
 	static char str[256];
 	
-	int ret = sceRegMgrGetKeyStr(category, name, str, sizeof(str)); 
+	SceInt ret = sceRegMgrGetKeyStr(category, name, str, sizeof(str)); 
 	
 	if (ret < 0)
 		return NULL;
@@ -47,21 +47,20 @@ char * regMgrGetStr(const char* category, const char* name)
 		return str;
 }
 
-void setBilinearFilter(int enabled, vita2d_texture * texture)
+static SceVoid setGxmFilter(vita2d_texture * texture)
 {
-	if (enabled == 1)
-		vita2d_texture_set_filters(texture, SCE_GXM_TEXTURE_FILTER_LINEAR, SCE_GXM_TEXTURE_FILTER_LINEAR);
+	vita2d_texture_set_filters(texture, SCE_GXM_TEXTURE_FILTER_LINEAR, SCE_GXM_TEXTURE_FILTER_LINEAR);
 }
 
-vita2d_texture * loadPngWithFilter(const void *buffer)
+vita2d_texture * vita2d_load_PNG_buffer_filter(const SceVoid *buffer)
 {
-	vita2d_texture *texture = vita2d_load_PNG_buffer(buffer);
-	setBilinearFilter(1, texture);
+	vita2d_texture * texture = vita2d_load_PNG_buffer(buffer);
+	setGxmFilter(texture);
 	
 	return texture;
 }
 
-void endDrawing(void) 
+SceVoid endDrawing(SceVoid) 
 {
 	vita2d_end_drawing();
 	vita2d_common_dialog_update();
@@ -69,11 +68,11 @@ void endDrawing(void)
 	sceDisplayWaitVblankStart();
 }
 
-void getSizeString(char * string, uint64_t size) //Thanks TheOfficialFloW
+SceVoid getSizeString(char * string, SceULong64 size) //Thanks TheOfficialFloW
 {
 	double double_size = (double)size;
 
-	int i = 0;
+	SceInt i = 0;
 	static char * units[] = { "B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
 	
 	while (double_size >= 1024.0f) 

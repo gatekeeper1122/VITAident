@@ -15,20 +15,20 @@ typedef enum
 	clockFrequencyType_gpuXbar
 } clockFrequencyType;
 
-//int scePowerGetBatteryElec(void); Crashes the VITA
-int scePowerGetUsingWireless(void);
+//SceInt scePowerGetBatteryElec(SceVoid); Crashes the VITA
+SceInt scePowerGetUsingWireless(SceVoid);
 
-int getClockFrequency(clockFrequencyType type);
-const char * getBatteryStatus(void);
-char * getBatteryPercentage(void);
-char * getUsingWireless(void);
-char * getBatterySOH(void);
-char * getBatteryCycleCount(void);
-char * getBatteryCapacity(void);
-char * getBatteryRemainCapacity(void);
-char * getBatteryTemp(int type);
-char * getBatteryVoltage(void);
-char * getUdcdCableState(void);
-char * getUsbChargingState(void);
+SceInt getClockFrequency(clockFrequencyType type);
+const char * getBatteryStatus(SceVoid);
+char * getBatteryPercentage(SceVoid);
+char * getUsingWireless(SceVoid);
+char * getBatterySOH(SceVoid);
+char * getBatteryCycleCount(SceVoid);
+char * getBatteryCapacity(SceVoid);
+char * getBatteryRemainCapacity(SceVoid);
+char * getBatteryTemp(SceInt type);
+char * getBatteryVoltage(SceVoid);
+char * getUdcdCableState(SceVoid);
+char * getUsbChargingState(SceVoid);
 
 #endif

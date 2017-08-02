@@ -11,13 +11,13 @@
 
 #include <vita2d.h>
 
-int getVolume(void);
-int getBrightness(void);
-int regMgrGetInt(const char * category, const char * name);
+SceInt getVolume(SceVoid);
+SceInt getBrightness(SceVoid);
+SceInt regMgrGetInt(const char * category, const char * name);
 char * regMgrGetStr(const char * category, const char * name);
-vita2d_texture * loadPngWithFilter(const void *buffer);
-void endDrawing(void);
-void getSizeString(char *string, uint64_t size);
+vita2d_texture * vita2d_load_PNG_buffer_filter(const SceVoid *buffer);
+SceVoid endDrawing(SceVoid);
+SceVoid getSizeString(char *string, SceULong64 size);
 const char * concat(char * s1, char * s2);
 
 #endif

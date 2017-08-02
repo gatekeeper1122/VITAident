@@ -2,12 +2,12 @@
 #include "kernel.h"
 #include "utils.h"
 
-char * getFwVersion(bool spoofed)
+char * getFwVersion(SceBool spoofed)
 {
 	static char version[16];
 	unsigned char str[32] = "";
 	
-	if (spoofed == true)
+	if (spoofed == SCE_TRUE)
 	{
 		SceKernelFwInfo info;
 		info.size = sizeof(SceKernelFwInfo);
@@ -32,7 +32,7 @@ char * getFwVersion(bool spoofed)
 	return version;
 }
 
-char getHenkakuVersion(void)
+char getHenkakuVersion(SceVoid)
 {
 	char henkakuVersion[10];
 	
@@ -45,12 +45,12 @@ char getHenkakuVersion(void)
 	return henkakuVersion[(strlen(henkakuVersion) - 1)];
 }
 
-int getModel(void)
+SceInt getModel(SceVoid)
 {
 	return sceKernelGetModelForCDialog();
 }
 
-char * getCID(void)
+char * getCID(SceVoid)
 {
 	char CID[32];
 	static char idps[32];
@@ -58,14 +58,14 @@ char * getCID(void)
 	// Get IDPS
 	_vshSblAimgrGetConsoleId(CID);
 	
-	int i = 0;
+	SceInt i = 0;
 	for (i = 0; i < 16; i++)
 		snprintf(idps + (i * 2), (32) - (i * 2) + 1, "%02X", CID[i]);
 	
 	return idps;
 }
 
-SceKernelOpenPsId getPSID(void)
+SceKernelOpenPsId getPSID(SceVoid)
 {
 	SceKernelOpenPsId id;
 	sceKernelGetOpenPsId(&id);
@@ -73,7 +73,7 @@ SceKernelOpenPsId getPSID(void)
 	return id;
 }
 
-char * getUnit(void)
+char * getUnit(SceVoid)
 {
 	if ((vshSblAimgrIsGenuineVITA() | vshSblAimgrIsGenuineDolce()) && (vshSblAimgrIsCEX()))
 		return "CEX unit";
@@ -89,7 +89,7 @@ char * getUnit(void)
 		return "PS Vita TV"; //Because it returns NULL running on a VITA TV
 }
 
-const char * getDeviceModel(void)
+const char * getDeviceModel(SceVoid)
 {
 	if (isPCHX000)
 		return concat("PCH-", getVitaModel());
@@ -103,7 +103,7 @@ const char * getDeviceModel(void)
 		return "Uknown";
 }
 
-const char * getBoard(void)
+const char * getBoard(SceVoid)
 {
 	if ((isPCHX000) && (strcmp(getVitaModel(), "2000") == 0))
 		return "USS-1001";

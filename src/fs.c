@@ -1,7 +1,7 @@
 #include "fs.h"
 #include "utils.h"
 
-int fileExists(const char * path)
+SceInt fileExists(const char * path)
 {
 	SceUID file = sceIoOpen(path, SCE_O_RDONLY, 0777);
 	
@@ -14,7 +14,7 @@ int fileExists(const char * path)
 	return 0;
 }
 
-int dirExists(const char * path)
+SceInt dirExists(const char * path)
 {
 	SceUID dir = sceIoDopen(path);
 	
@@ -27,7 +27,20 @@ int dirExists(const char * path)
 	return 0;
 }
 
-SceOff getPartitionInfo(int storage, const char * partition)
+SceInt writeFile(char * file, SceVoid * buf, SceInt size) 
+{
+	SceUID fd = sceIoOpen(file, SCE_O_WRONLY | SCE_O_CREAT | SCE_O_TRUNC, 0777);
+	
+	if (fd < 0)
+		return fd;
+
+	SceInt written = sceIoWrite(fd, buf, size);
+	sceIoClose(fd);
+	
+	return written;
+}
+
+SceOff getPartitionInfo(SceInt storage, const char * partition)
 {
 	SceOff maxSize = 0;
 	SceOff freeSize = 0;
@@ -39,7 +52,7 @@ SceOff getPartitionInfo(int storage, const char * partition)
 	{		
 		SceIoDevInfo info;
 		memset(&info, 0, sizeof(SceIoDevInfo));
-		int res = sceIoDevctl(partition, 0x3001, 0, 0, &info, sizeof(SceIoDevInfo));
+		SceInt res = sceIoDevctl(partition, 0x3001, 0, 0, &info, sizeof(SceIoDevInfo));
 		
 		if (res >= 0) 
 		{
@@ -54,7 +67,7 @@ SceOff getPartitionInfo(int storage, const char * partition)
 	return maxSize;
 }
 
-char * getVitaModel(void)
+char * getVitaModel(SceVoid)
 {	
 	SceOff maxSize = getPartitionInfo(1, "ur0:");
 	
@@ -65,17 +78,4 @@ char * getVitaModel(void)
 		return "2000";
 	
 	return "1000";
-}
-
-int writeFile(char * file, void * buf, int size) 
-{
-	SceUID fd = sceIoOpen(file, SCE_O_WRONLY | SCE_O_CREAT | SCE_O_TRUNC, 0777);
-	
-	if (fd < 0)
-		return fd;
-
-	int written = sceIoWrite(fd, buf, size);
-	sceIoClose(fd);
-	
-	return written;
 }

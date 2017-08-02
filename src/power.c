@@ -1,7 +1,7 @@
 #include "power.h"
 #include "utils.h"
 
-int getClockFrequency(clockFrequencyType type)
+SceInt getClockFrequency(clockFrequencyType type)
 {
 	if (type == clockFrequencyType_cpu)
 		return scePowerGetArmClockFrequency();
@@ -16,9 +16,9 @@ int getClockFrequency(clockFrequencyType type)
 		return 0;
 }
 
-const char * getBatteryStatus(void)
+const char * getBatteryStatus(SceVoid)
 {
-	int batteryStateBool = scePowerIsBatteryCharging();
+	SceInt batteryStateBool = scePowerIsBatteryCharging();
 	
 	if (!batteryStateBool) 
 		return "Not charging";
@@ -26,7 +26,7 @@ const char * getBatteryStatus(void)
 	return "Charging";
 }
 
-char * getBatteryPercentage(void)
+char * getBatteryPercentage(SceVoid)
 {
 	static char percentage[6];
 	
@@ -48,7 +48,7 @@ char * getBatteryPercentage(void)
 	return batteryElec;
 }*/
 
-char * getUsingWireless(void)
+char * getUsingWireless(SceVoid)
 {
 	static char usingWireless[10];
 	
@@ -59,7 +59,7 @@ char * getUsingWireless(void)
 	return usingWireless;
 }
 
-char * getBatterySOH(void)
+char * getBatterySOH(SceVoid)
 {
 	static char SOH[6];
 	
@@ -70,7 +70,7 @@ char * getBatterySOH(void)
 	return SOH;
 }
 
-char * getBatteryCycleCount(void)
+char * getBatteryCycleCount(SceVoid)
 {
 	static char count[6];
 	
@@ -81,7 +81,7 @@ char * getBatteryCycleCount(void)
 	return count;
 }
 
-char * getBatteryCapacity(void)
+char * getBatteryCapacity(SceVoid)
 {
 	static char capacity[10];
 	
@@ -92,7 +92,7 @@ char * getBatteryCapacity(void)
 	return capacity;
 }
 
-char * getBatteryRemainCapacity(void)
+char * getBatteryRemainCapacity(SceVoid)
 {
 	static char capacity[10];
 	
@@ -103,7 +103,7 @@ char * getBatteryRemainCapacity(void)
 	return capacity;
 }
 
-char * getBatteryTemp(int type) 
+char * getBatteryTemp(SceInt type) 
 {
 	static char c[7];
 	snprintf(c, 7, "%0.1f", ((float)scePowerGetBatteryTemp()) / 100.0);
@@ -117,7 +117,7 @@ char * getBatteryTemp(int type)
 	return f;
 }
 
-char * getBatteryVoltage(void) 
+char * getBatteryVoltage(SceVoid) 
 {
 	static char volts[6];
 	
@@ -126,7 +126,7 @@ char * getBatteryVoltage(void)
 	return volts;
 }
 
-char * getUdcdCableState(void)
+char * getUdcdCableState(SceVoid)
 {
 	static char udcdState[19];
 	SceUdcdDeviceState state;
@@ -140,13 +140,13 @@ char * getUdcdCableState(void)
 	return udcdState;
 }
 
-char * getUsbChargingState(void) // USB power supply is system settings
+char * getUsbChargingState(SceVoid) // USB power supply is system settings
 {
 	static char usbChargeState[21];
 	SceUdcdDeviceState state;
 	sceUdcdGetDeviceState(&state);
 	
-	int usbChargeEnable = regMgrGetInt("/CONFIG/USB/", "usb_charge_enable");
+	SceInt usbChargeEnable = regMgrGetInt("/CONFIG/USB/", "usb_charge_enable");
 
 	if (usbChargeEnable == 1)
 		snprintf(usbChargeState, 21, "USB charging enabled");

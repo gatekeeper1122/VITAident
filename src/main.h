@@ -13,17 +13,22 @@
 #define selector_yDistance 40 // The distance between the Y axis of the two selections
 #define MAX_ITEMS 7
 
+#define COLOUR_MAINMENU					RGBA8(78, 74, 67, 255)
+#define COLOUR_MAINMENU_HIGHLIGHT		RGBA8(255, 255, 255, 255)
+#define COLOUR_MENU						RGBA8(0, 0, 0, 255)
+#define COLOUR_SUBJECT					RGBA8(120, 118, 115, 255)
+#define COLOUR_VALUE					RGBA8(67, 72, 66, 255)
+
 vita2d_texture * VITAident;
 vita2d_pvf * font;
 
 SceCtrlData pad, old_pad;
-unsigned int pressed;
+SceUInt32 pressed;
 
-void kernelMenu();
-void systemMenu();
-void batteryMenu();
-void miscMenu();
-int controls();
-int mainMenu();
+SceVoid kernelMenu(SceVoid);
+SceVoid systemMenu(SceVoid);
+SceVoid batteryMenu(SceVoid);
+SceVoid miscMenu(SceVoid);
+SceVoid mainMenu(SceVoid);
 
 #endif
