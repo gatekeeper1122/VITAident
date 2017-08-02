@@ -106,10 +106,10 @@ char * getBatteryRemainCapacity(SceVoid)
 char * getBatteryTemp(SceInt type) 
 {
 	static char c[7];
-	snprintf(c, 7, "%0.1f", ((float)scePowerGetBatteryTemp()) / 100.0);
+	snprintf(c, 7, "%0.1f", ((SceFloat)scePowerGetBatteryTemp()) / 100.0);
 	
 	static char f[8];
-	snprintf(f, 8, "%0.1f", ((1.8 * (float)scePowerGetBatteryTemp()) / 100.0) + 32.0);
+	snprintf(f, 8, "%0.1f", ((1.8 * (SceFloat)scePowerGetBatteryTemp()) / 100.0) + 32.0);
 	
 	if (type == 0)
 		return c;
@@ -121,7 +121,7 @@ char * getBatteryVoltage(SceVoid)
 {
 	static char volts[6];
 	
-	snprintf(volts, 6, "%0.1f" , (((float)scePowerGetBatteryVolt()) / 1000.0));
+	snprintf(volts, 6, "%0.1f" , (((SceFloat)scePowerGetBatteryVolt()) / 1000.0));
 	
 	return volts;
 }

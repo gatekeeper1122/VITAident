@@ -185,7 +185,7 @@ SceVoid mainMenu(SceVoid)
 		
 		vita2d_draw_rectangle(17, selector_image_y, 328, 40, RGBA8(242, 119, 62, 255));
 		
-		vita2d_pvf_draw_textf(font, 15, 30, COLOUR_MAINMENU_HIGHLIGHT, 1.1f, "VITAident 0.7.3");
+		vita2d_pvf_draw_textf(font, 15, 30, COLOUR_MAINMENU_HIGHLIGHT, 1.1f, "VITAident 0.7.4");
 		
 		if (MenuSelection == 1)
 			vita2d_pvf_draw_textf(font, 25, 92, COLOUR_MAINMENU_HIGHLIGHT, 1.1f, "Kernel Information");
@@ -266,7 +266,7 @@ int main(int argc, char *argv[])
 	
 	vita2d_set_clear_color(COLOUR_MENU);
 	
-	VITAident = vita2d_load_PNG_buffer(&_binary_res_VITAident_png_start);
+	VITAident = vita2d_load_PNG_buffer_filter(&_binary_res_VITAident_png_start);
 	
 	font = vita2d_load_default_pvf();
 	
