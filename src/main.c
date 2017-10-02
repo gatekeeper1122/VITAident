@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <string.h>
+
 #include "app.h"
 #include "fs.h"
 #include "kernel.h"
@@ -110,10 +113,10 @@ SceVoid miscMenu(SceVoid)
 	if (vshRemovableMemoryGetCardInsertState() == 1)
 	{
 		vita2d_pvf_draw_text(font, 364, 465, COLOUR_SUBJECT, 1.1f, "Memory card storage:");
-		vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "Memory card storage:") + 10), 465, COLOUR_VALUE, 1.1f, "%s", getStorageInfo(0));
+		vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "Memory card storage:") + 10), 465, COLOUR_VALUE, 1.1f, "%s", getStorageInfo("ux0:", 0));
 		
 		vita2d_pvf_draw_text(font, 364, 505, COLOUR_SUBJECT, 1.1f, "Memory card storage free:");	
-		vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "Memory card storage free:") + 10), 505, COLOUR_VALUE, 1.1f, "%s", getStorageInfo(1));
+		vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "Memory card storage free:") + 10), 505, COLOUR_VALUE, 1.1f, "%s", getStorageInfo("ux0:", 1));
 	}	
 }
 
@@ -271,7 +274,7 @@ int main(int argc, char *argv[])
 	font = vita2d_load_default_pvf();
 	
 	while(1)
-        mainMenu();
+		mainMenu();
 	
 	vita2d_fini();
 	vita2d_free_texture(VITAident);

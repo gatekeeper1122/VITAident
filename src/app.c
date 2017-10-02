@@ -1,31 +1,47 @@
+#include <stdio.h>
+#include <string.h>
+
 #include "app.h"
 #include "utils.h"
 
-SceVoid initAppUtil(SceVoid)
+SceInt initAppUtil(SceVoid)
 {
 	SceAppUtilInitParam init;
 	SceAppUtilBootParam boot;
 	memset(&init, 0, sizeof(SceAppUtilInitParam));
 	memset(&boot, 0, sizeof(SceAppUtilBootParam));
-	sceAppUtilInit(&init, &boot);
+	
+	SceInt ret = 0;
+	
+	if (R_FAILED(ret = sceAppUtilInit(&init, &boot)))
+		return ret;
+	
+	return 0;
 }
 
-SceVoid termAppUtil(SceVoid)
+SceInt termAppUtil(SceVoid)
 {
-	sceAppUtilShutdown();
+	SceInt ret = 0;
+	
+	if (R_FAILED(ret = sceAppUtilShutdown()))
+		return ret;
+	
+	return 0;
 }
 
 SceChar8 * getUser(SceVoid)
 {
 	static SceChar8 userName[SCE_SYSTEM_PARAM_USERNAME_MAXSIZE];
-	sceAppUtilSystemParamGetString(SCE_SYSTEM_PARAM_ID_USERNAME, userName, SCE_SYSTEM_PARAM_USERNAME_MAXSIZE);
 	
-	return userName;
+	if (R_SUCCEEDED(sceAppUtilSystemParamGetString(SCE_SYSTEM_PARAM_ID_USERNAME, userName, SCE_SYSTEM_PARAM_USERNAME_MAXSIZE)))
+		return userName;
+	
+	return NULL;
 }
 
 const char * getLang(SceVoid)
 {
-	const char *languages[] = 
+	const char * languages[] = 
 	{
 		"Japanese",
 		"English US",
@@ -49,27 +65,36 @@ const char * getLang(SceVoid)
 	};
 
 	int language = 0;
-	sceAppUtilSystemParamGetInt(SCE_SYSTEM_PARAM_ID_LANG, &language);
-
-	if (language < 18)
-		return languages[language];
-	else
-		return languages[18];
+	
+	if (R_SUCCEEDED(sceAppUtilSystemParamGetInt(SCE_SYSTEM_PARAM_ID_LANG, &language)))
+	{
+		if (language < 0x12)
+			return languages[language];
+		else
+			return languages[0x12];
+	}
+	
+	return NULL;
 }
 
-char * getStorageInfo(SceInt type)
+// 0 = max, 1 = free
+char * getStorageInfo(const char * dev, SceInt type)
 {
-	SceULong64 free_size = 0, max_size = 0;
-	sceAppMgrGetDevInfo("ux0:", &max_size, &free_size);
+	SceIoDevInfo info;
+	static char free_size_string[0x10], max_size_string[0x10];
 	
-	static char free_size_string[16], max_size_string[16];
-	getSizeString(free_size_string, free_size);
-	getSizeString(max_size_string, max_size);
+	if (R_SUCCEEDED(sceIoDevctl(dev, 0x3001, NULL, 0, &info, sizeof(SceIoDevInfo))))
+	{
+		getSizeString(free_size_string, info.free_size);
+		getSizeString(max_size_string, info.max_size);
 	
-	if (type == 0)
-		return max_size_string;
-	else 
-		return free_size_string;
+		if (type == 0)
+			return max_size_string;
+		else 
+			return free_size_string;
+	}
+	
+	return NULL;
 }
 
 SceBool getEnterButton(SceVoid) // Circle = 0, cross = 1

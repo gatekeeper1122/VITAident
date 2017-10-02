@@ -1,11 +1,15 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #include "utils.h"
 
 SceInt getVolume(SceVoid)
 {
 	SceInt volume = 0;
-	SceInt sceVolume = regMgrGetInt("/CONFIG/SOUND/", "main_volume");
+	SceInt regVolume = regMgrGetInt("/CONFIG/SOUND/", "main_volume");
 	
-	volume = (sceVolume * 3.33333333);
+	volume = (regVolume * 3.33333333);
 	
 	if (volume == 99)
 		volume = 100;
@@ -16,46 +20,37 @@ SceInt getVolume(SceVoid)
 SceInt getBrightness(SceVoid)
 {
 	SceInt brightness = 0;
-	SceInt sceBrightness = regMgrGetInt("/CONFIG/DISPLAY/", "brightness");
+	SceInt regBrightness = regMgrGetInt("/CONFIG/DISPLAY/", "brightness");
 	
-	brightness = (sceBrightness * 0.00152590219);
+	brightness = (regBrightness * 0.00152590219);
 	
 	return brightness;
 }
 
 SceInt regMgrGetInt(const char * category, const char * name)
 {
-	int value = -1;
+	int value = 0;
 	
-	SceInt ret = sceRegMgrGetKeyInt(category, name, &value);
-	
-	if (ret < 0)
-		return 0;
-	else
+	if (R_SUCCEEDED(sceRegMgrGetKeyInt(category, name, &value)))
 		return value;
+	
+	return 0;
 }
 
 char * regMgrGetStr(const char* category, const char* name)
 {
 	static char str[256];
 	
-	SceInt ret = sceRegMgrGetKeyStr(category, name, str, sizeof(str)); 
-	
-	if (ret < 0)
-		return NULL;
-	else
+	if (R_SUCCEEDED(sceRegMgrGetKeyStr(category, name, str, sizeof(str))))
 		return str;
+	
+	return NULL;
 }
 
-static SceVoid setGxmFilter(vita2d_texture * texture)
-{
-	vita2d_texture_set_filters(texture, SCE_GXM_TEXTURE_FILTER_LINEAR, SCE_GXM_TEXTURE_FILTER_LINEAR);
-}
-
-vita2d_texture * vita2d_load_PNG_buffer_filter(const SceVoid *buffer)
+vita2d_texture * vita2d_load_PNG_buffer_filter(const SceVoid * buffer)
 {
 	vita2d_texture * texture = vita2d_load_PNG_buffer(buffer);
-	setGxmFilter(texture);
+	vita2d_texture_set_filters(texture, SCE_GXM_TEXTURE_FILTER_LINEAR, SCE_GXM_TEXTURE_FILTER_LINEAR);
 	
 	return texture;
 }
