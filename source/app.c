@@ -77,24 +77,56 @@ const char * getLang(SceVoid)
 	return NULL;
 }
 
-// 0 = max, 1 = free
-char * getStorageInfo(const char * dev, SceInt type)
+SceOff getMaxSize(const char * dev)
 {
 	SceIoDevInfo info;
-	static char free_size_string[0x10], max_size_string[0x10];
 	
 	if (R_SUCCEEDED(sceIoDevctl(dev, 0x3001, NULL, 0, &info, sizeof(SceIoDevInfo))))
-	{
-		getSizeString(free_size_string, info.free_size);
-		getSizeString(max_size_string, info.max_size);
+		return info.max_size;
 	
-		if (type == 0)
-			return max_size_string;
-		else 
-			return free_size_string;
+	return 0;
+}
+
+SceOff getFreeSize(const char * dev)
+{
+	SceIoDevInfo info;
+	
+	if (R_SUCCEEDED(sceIoDevctl(dev, 0x3001, NULL, 0, &info, sizeof(SceIoDevInfo))))
+		return info.free_size;
+	
+	return 0;
+}
+
+SceOff getUsedSize(const char * dev)
+{
+	SceIoDevInfo info;
+	
+	if (R_SUCCEEDED(sceIoDevctl(dev, 0x3001, NULL, 0, &info, sizeof(SceIoDevInfo))))
+		return info.max_size - info.free_size;
+	
+	return 0;
+}
+
+char * getStorageInfo(const char * dev, SceInt type)
+{
+	static char size_string[0x10];
+
+	switch (type)
+	{
+		case 0: // Max size
+			getSizeString(size_string, getMaxSize(dev));
+			break;
+		
+		case 1: // Free size
+			getSizeString(size_string, getFreeSize(dev));
+			break;
+			
+		case 2: // Used size
+			getSizeString(size_string, getUsedSize(dev));
+			break;
 	}
 	
-	return NULL;
+	return size_string;
 }
 
 SceBool getEnterButton(SceVoid) // Circle = 0, cross = 1

@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <psp2/compat.h>
+#include <psp2kern/bt.h>
+
 #include "app.h"
 #include "fs.h"
 #include "kernel.h"
@@ -10,6 +13,15 @@
 #include "utils.h"
 
 extern SceUChar8 _binary_res_VITAident_png_start;
+extern SceUChar8 _binary_res_drive_png_start;
+
+static char * devices[] = 
+{
+	"ur0:",
+	"ux0:",
+	"imc0:",
+	"uma0:",
+};
 
 SceVoid kernelMenu(SceVoid)
 {		
@@ -84,6 +96,70 @@ SceVoid batteryMenu(SceVoid)
 	vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "Udcd state:") + 10), 465, COLOUR_VALUE, 1.1f, "%s (%s)", getUdcdCableState(), getUsbChargingState());
 }
 
+SceVoid storageMenu(SceVoid)
+{
+	vita2d_draw_rectangle(345, 50, 615, 494, RGBA8(242, 241, 239, 255));
+	
+	vita2d_draw_texture(drive, 380, 64);
+	vita2d_draw_rectangle(490, 148, 430, 16, RGBA8(120, 118, 115, 255));
+	vita2d_draw_rectangle(492, 150, 426, 12, RGBA8(242, 241, 239, 255));
+	vita2d_draw_rectangle(492, 150, (((double)getUsedSize(devices[0]) / (double)getMaxSize(devices[0])) * 426.00), 12, RGBA8(242, 119, 62, 255));
+	vita2d_pvf_draw_text(font, 490, 84, COLOUR_VALUE, 1.1f, devices[0]);
+	vita2d_pvf_draw_text(font, 490, 110, COLOUR_SUBJECT, 1.1f, "Free size:");
+	vita2d_pvf_draw_textf(font, (490 + vita2d_pvf_text_width(font, 1.1f, "Free size:") + 10), 110, COLOUR_VALUE, 1.1f, getStorageInfo(devices[0], 1));
+	vita2d_pvf_draw_text(font, 490, 135, COLOUR_SUBJECT, 1.1f, "Max size:");
+	vita2d_pvf_draw_textf(font, (490 + vita2d_pvf_text_width(font, 1.1f, "Max size:") + 10), 135, COLOUR_VALUE, 1.1f, getStorageInfo(devices[0], 0));
+	
+	if (vshRemovableMemoryGetCardInsertState()) // if mem card is inserted
+	{
+		vita2d_draw_texture(drive, 380, 184);
+		vita2d_draw_rectangle(490, 268, 430, 16, RGBA8(120, 118, 115, 255));
+		vita2d_draw_rectangle(492, 270, 426, 12, RGBA8(242, 241, 239, 255));
+		vita2d_draw_rectangle(492, 270, (((double)getUsedSize(devices[1]) / (double)getMaxSize(devices[1])) * 426.00), 12, RGBA8(242, 119, 62, 255));
+		vita2d_pvf_draw_text(font, 490, 204, COLOUR_VALUE, 1.1f, devices[1]);
+		vita2d_pvf_draw_text(font, 490, 230, COLOUR_SUBJECT, 1.1f, "Free size:");
+		vita2d_pvf_draw_textf(font, (490 + vita2d_pvf_text_width(font, 1.1f, "Free size:") + 10), 230, COLOUR_VALUE, 1.1f, getStorageInfo(devices[1], 1));
+		vita2d_pvf_draw_text(font, 490, 255, COLOUR_SUBJECT, 1.1f, "Max size:");
+		vita2d_pvf_draw_textf(font, (490 + vita2d_pvf_text_width(font, 1.1f, "Max size:") + 10), 255, COLOUR_VALUE, 1.1f, getStorageInfo(devices[1], 0));
+	}
+	
+	else if ((!vshRemovableMemoryGetCardInsertState()) && ((strcmp(getVitaModel(), "1000") == 0) || (isVTE1000)))
+	{
+		vita2d_draw_texture(drive, 380, 184);
+		vita2d_draw_rectangle(490, 268, 430, 16, RGBA8(120, 118, 115, 255));
+		vita2d_draw_rectangle(492, 270, 426, 12, RGBA8(242, 241, 239, 255));
+		vita2d_draw_rectangle(492, 270, (((double)getUsedSize(devices[2]) / (double)getMaxSize(devices[2])) * 426.00), 12, RGBA8(242, 119, 62, 255));
+		vita2d_pvf_draw_text(font, 490, 204, COLOUR_VALUE, 1.1f, devices[2]);
+		vita2d_pvf_draw_text(font, 490, 230, COLOUR_SUBJECT, 1.1f, "Free size:");
+		vita2d_pvf_draw_textf(font, (490 + vita2d_pvf_text_width(font, 1.1f, "Free size:") + 10), 230, COLOUR_VALUE, 1.1f, getStorageInfo(devices[2], 1));
+		vita2d_pvf_draw_text(font, 490, 255, COLOUR_SUBJECT, 1.1f, "Max size:");
+		vita2d_pvf_draw_textf(font, (490 + vita2d_pvf_text_width(font, 1.1f, "Max size:") + 10), 255, COLOUR_VALUE, 1.1f, getStorageInfo(devices[2], 0));
+	}
+	
+	if (getMaxSize(devices[3]))
+	{
+		vita2d_draw_texture(drive, 380, 304);
+		vita2d_draw_rectangle(490, 388, 430, 16, RGBA8(120, 118, 115, 255));
+		vita2d_draw_rectangle(492, 390, 426, 12, RGBA8(242, 241, 239, 255));
+		vita2d_draw_rectangle(492, 390, (((double)getUsedSize(devices[3]) / (double)getMaxSize(devices[3])) * 426.00), 12, RGBA8(242, 119, 62, 255));
+		vita2d_pvf_draw_text(font, 490, 324, COLOUR_VALUE, 1.1f, devices[3]);
+		vita2d_pvf_draw_text(font, 490, 350, COLOUR_SUBJECT, 1.1f, "Free size:");
+		vita2d_pvf_draw_textf(font, (490 + vita2d_pvf_text_width(font, 1.1f, "Free size:") + 10), 350, COLOUR_VALUE, 1.1f, getStorageInfo(devices[3], 1));
+		vita2d_pvf_draw_text(font, 490, 375, COLOUR_SUBJECT, 1.1f, "Max size:");
+		vita2d_pvf_draw_textf(font, (490 + vita2d_pvf_text_width(font, 1.1f, "Max size:") + 10), 375, COLOUR_VALUE, 1.1f, getStorageInfo(devices[3], 0));
+	}
+	
+	/*vita2d_draw_texture(drive, 380, 424);
+	vita2d_draw_rectangle(490, 508, 430, 16, RGBA8(120, 118, 115, 255));
+	vita2d_draw_rectangle(492, 510, 426, 12, RGBA8(242, 241, 239, 255));
+	vita2d_draw_rectangle(492, 510, (((double)getUsedSize(devices[3]) / (double)getMaxSize(devices[3])) * 426.00), 12, RGBA8(242, 119, 62, 255));
+	vita2d_pvf_draw_text(font, 490, 444, COLOUR_VALUE, 1.1f, devices[3]);
+	vita2d_pvf_draw_text(font, 490, 470, COLOUR_SUBJECT, 1.1f, "Free size:");
+	vita2d_pvf_draw_textf(font, (490 + vita2d_pvf_text_width(font, 1.1f, "Free size:") + 10), 470, COLOUR_VALUE, 1.1f, getStorageInfo(devices[3], 1));
+	vita2d_pvf_draw_text(font, 490, 495, COLOUR_SUBJECT, 1.1f, "Max size:");
+	vita2d_pvf_draw_textf(font, (490 + vita2d_pvf_text_width(font, 1.1f, "Max size:") + 10), 495, COLOUR_VALUE, 1.1f, getStorageInfo(devices[3], 0));*/
+}
+
 SceVoid miscMenu(SceVoid)
 {		
 	vita2d_pvf_draw_textf(font, (((616 - vita2d_pvf_text_width(font, 1.1f, "Misc Menu")) / 2) + 344), 225, COLOUR_MENU, 1.1f, "Misc Menu");
@@ -95,29 +171,14 @@ SceVoid miscMenu(SceVoid)
 	vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "IP address:") + 10), 305, COLOUR_VALUE, 1.1f, "%s", getIP());
 	
 	vita2d_pvf_draw_text(font, 364, 345, COLOUR_SUBJECT, 1.1f, "Enter button:");
-	vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "Enter button:") + 10), 345, COLOUR_VALUE, 1.1f, "%s", getEnterButton()? "Cross (X)" : "Circle (O)");
+	vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "Enter button:") + 10), 345, COLOUR_VALUE, 1.1f, "%s", getEnterButton()? "cross (X)" : "circle (O)");
 
-	char free_size_string[16], max_size_string[16];
-	SceOff freeSize = getPartitionInfo(0, "ur0:");
-	SceOff maxSize = getPartitionInfo(1, "ur0:");
-	
-	getSizeString(free_size_string, freeSize);
-	getSizeString(max_size_string, maxSize);
-
-	vita2d_pvf_draw_text(font, 364, 385, COLOUR_SUBJECT, 1.1f, "Internal storage:");
-	vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "Internal storage:") + 10), 385, COLOUR_VALUE, 1.1f, "%s", max_size_string);
-	
-	vita2d_pvf_draw_text(font, 364, 425, COLOUR_SUBJECT, 1.1f, "Internal storage free:");
-	vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "Internal storage free:") + 10), 425, COLOUR_VALUE, 1.1f, "%s", free_size_string);
-	
-	if (vshRemovableMemoryGetCardInsertState() == 1)
+	SceInt fw = 0;
+	if (R_SUCCEEDED(fw = sceCompatGetPspSystemSoftwareVersion()))
 	{
-		vita2d_pvf_draw_text(font, 364, 465, COLOUR_SUBJECT, 1.1f, "Memory card storage:");
-		vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "Memory card storage:") + 10), 465, COLOUR_VALUE, 1.1f, "%s", getStorageInfo("ux0:", 0));
-		
-		vita2d_pvf_draw_text(font, 364, 505, COLOUR_SUBJECT, 1.1f, "Memory card storage free:");	
-		vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "Memory card storage free:") + 10), 505, COLOUR_VALUE, 1.1f, "%s", getStorageInfo("ux0:", 1));
-	}	
+		vita2d_pvf_draw_text(font, 364, 385, COLOUR_SUBJECT, 1.1f, "PSP firmware version:");
+		vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "PSP firmware version:") + 10), 385, COLOUR_VALUE, 1.1f, "%d.%.2d", fw / 100, fw % 100);
+	}
 }
 
 SceVoid configMenu(SceVoid)
@@ -190,40 +251,14 @@ SceVoid mainMenu(SceVoid)
 		
 		vita2d_pvf_draw_textf(font, 15, 30, COLOUR_MAINMENU_HIGHLIGHT, 1.1f, "VITAident 0.7.4");
 		
-		if (MenuSelection == 1)
-			vita2d_pvf_draw_textf(font, 25, 92, COLOUR_MAINMENU_HIGHLIGHT, 1.1f, "Kernel Information");
-		else 
-			vita2d_pvf_draw_textf(font, 25, 92, COLOUR_MAINMENU, 1.1f, "Kernel Information");
-		
-		if (MenuSelection == 2)
-			vita2d_pvf_draw_textf(font, 25, 132, COLOUR_MAINMENU_HIGHLIGHT, 1.1f, "System Information");
-		else
-			vita2d_pvf_draw_textf(font, 25, 132, COLOUR_MAINMENU, 1.1f, "System Information");
-		
-		if (MenuSelection == 3)
-			vita2d_pvf_draw_textf(font, 25, 172, COLOUR_MAINMENU_HIGHLIGHT, 1.1f, "Battery Information");
-		else
-			vita2d_pvf_draw_textf(font, 25, 172, COLOUR_MAINMENU, 1.1f, "Battery Information");
-		
-		if (MenuSelection == 4)
-			vita2d_pvf_draw_textf(font, 25, 212, COLOUR_MAINMENU_HIGHLIGHT, 1.1f, "Miscelleanous");
-		else
-			vita2d_pvf_draw_textf(font, 25, 212, COLOUR_MAINMENU, 1.1f, "Miscelleanous");
-		
-		if (MenuSelection == 5)
-			vita2d_pvf_draw_textf(font, 25, 252, COLOUR_MAINMENU_HIGHLIGHT, 1.1f, "Config");
-		else
-			vita2d_pvf_draw_textf(font, 25, 252, COLOUR_MAINMENU, 1.1f, "Config");
-		
-		if (MenuSelection == 6)
-			vita2d_pvf_draw_textf(font, 25, 292, COLOUR_MAINMENU_HIGHLIGHT, 1.1f, "PSN");
-		else
-			vita2d_pvf_draw_textf(font, 25, 292, COLOUR_MAINMENU, 1.1f, "PSN");
-		
-		if (MenuSelection == 7)
-			vita2d_pvf_draw_textf(font, 25, 332, COLOUR_MAINMENU_HIGHLIGHT, 1.1f, "Exit");
-		else
-			vita2d_pvf_draw_textf(font, 25, 332, COLOUR_MAINMENU, 1.1f, "Exit");
+		vita2d_pvf_draw_textf(font, 25, 92, MenuSelection == 1? COLOUR_MAINMENU_HIGHLIGHT : COLOUR_MAINMENU, 1.1f, "Kernel Information");
+		vita2d_pvf_draw_textf(font, 25, 132, MenuSelection == 2? COLOUR_MAINMENU_HIGHLIGHT : COLOUR_MAINMENU, 1.1f, "System Information");
+		vita2d_pvf_draw_textf(font, 25, 172, MenuSelection == 3? COLOUR_MAINMENU_HIGHLIGHT : COLOUR_MAINMENU, 1.1f, "Battery Information");
+		vita2d_pvf_draw_textf(font, 25, 212, MenuSelection == 4? COLOUR_MAINMENU_HIGHLIGHT : COLOUR_MAINMENU, 1.1f, "Storage Information");
+		vita2d_pvf_draw_textf(font, 25, 252, MenuSelection == 5? COLOUR_MAINMENU_HIGHLIGHT : COLOUR_MAINMENU, 1.1f, "Miscelleanous");
+		vita2d_pvf_draw_textf(font, 25, 292, MenuSelection == 6? COLOUR_MAINMENU_HIGHLIGHT : COLOUR_MAINMENU, 1.1f, "Config");
+		vita2d_pvf_draw_textf(font, 25, 332, MenuSelection == 7? COLOUR_MAINMENU_HIGHLIGHT : COLOUR_MAINMENU, 1.1f, "PSN");
+		vita2d_pvf_draw_textf(font, 25, 372, MenuSelection == 8? COLOUR_MAINMENU_HIGHLIGHT : COLOUR_MAINMENU, 1.1f, "Exit");
 		
 		controls();
 		
@@ -237,24 +272,42 @@ SceVoid mainMenu(SceVoid)
         if (MenuSelection < 1) 
 			MenuSelection = MAX_ITEMS; //Sets the selection back to last
 		
-		if (MenuSelection == 1)
-			kernelMenu();
-		else if (MenuSelection == 2)
-			systemMenu();
-		else if (MenuSelection == 3)
-			batteryMenu();
-		else if (MenuSelection == 4) 
-			miscMenu();
-		else if (MenuSelection == 5) 
-			configMenu();
-		else if (MenuSelection == 6) 
-			psnMenu();
-		else if (MenuSelection == 7)
+		switch (MenuSelection)
 		{
-			if ((getEnterButton() == SCE_FALSE) && (pressed & SCE_CTRL_CIRCLE))
-				sceKernelExitProcess(0);
-			else if (pressed & SCE_CTRL_CROSS)
-				sceKernelExitProcess(0);
+			case 1:
+				kernelMenu();
+				break;
+				
+			case 2:
+				systemMenu();
+				break;
+				
+			case 3:
+				batteryMenu();
+				break;
+				
+			case 4:
+				storageMenu();
+				break;
+				
+			case 5:
+				miscMenu();
+				break;
+				
+			case 6:
+				configMenu();
+				break;
+				
+			case 7:
+				psnMenu();
+				break;
+				
+			case 8:
+				if ((getEnterButton() == SCE_FALSE) && (pressed & SCE_CTRL_CIRCLE))
+					sceKernelExitProcess(0);
+				else if (pressed & SCE_CTRL_CROSS)
+					sceKernelExitProcess(0);
+				break;
 		}
 		
 		endDrawing();
@@ -265,11 +318,14 @@ int main(int argc, char *argv[])
 {
 	initAppUtil();
 	initNet();
+	sceCompatInitEx(0);
+	sceCompatStart();
 	vita2d_init();
 	
 	vita2d_set_clear_color(COLOUR_MENU);
 	
 	VITAident = vita2d_load_PNG_buffer_filter(&_binary_res_VITAident_png_start);
+	drive = vita2d_load_PNG_buffer_filter(&_binary_res_drive_png_start);
 	
 	font = vita2d_load_default_pvf();
 	
@@ -278,7 +334,10 @@ int main(int argc, char *argv[])
 	
 	vita2d_fini();
 	vita2d_free_texture(VITAident);
+	vita2d_free_texture(drive);
 	vita2d_free_pvf(font);
+	sceCompatStop();
+	sceCompatUninit();
 	termNet();
 	termAppUtil();
 	sceKernelExitProcess(0);
