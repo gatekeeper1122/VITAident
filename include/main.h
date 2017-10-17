@@ -5,7 +5,7 @@
 #include <vita2d.h>
 
 #define selector_yDistance 40 // The distance between the Y axis of the two selections
-#define MAX_ITEMS 8
+#define MAX_ITEMS 9
 
 #define COLOUR_MAINMENU                 RGBA8(78, 74, 67, 255)
 #define COLOUR_MAINMENU_HIGHLIGHT       RGBA8(255, 255, 255, 255)

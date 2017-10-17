@@ -6,6 +6,7 @@
 		File: touch.c
 		
 */
+#include <malloc.h>
 
 #include "touch.h"
 #include "utils.h"
@@ -14,7 +15,7 @@ int initTouch()
 {
 	sceTouchSetSamplingState(SCE_TOUCH_PORT_FRONT, 1);
 	
-	touchState = sceMalloc(sizeof(touchStateData));
+	touchState = malloc(sizeof(touchStateData));
 	touchState->posX = 0;
 	touchState->posY = 0;
 	touchState->held = 0;

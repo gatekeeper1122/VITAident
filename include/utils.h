@@ -11,7 +11,6 @@
 #define R_FAILED(res)      ((res)<0)
 /// Returns the level of a result code.
 
-SceInt getVolume(SceVoid);
 SceInt getBrightness(SceVoid);
 SceInt regMgrGetInt(const char * category, const char * name);
 char * regMgrGetStr(const char * category, const char * name);

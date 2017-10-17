@@ -10,6 +10,7 @@
 #include "main.h"
 #include "net.h"
 #include "power.h"
+#include "touch.h"
 #include "utils.h"
 
 extern SceUChar8 _binary_res_VITAident_png_start;
@@ -160,6 +161,160 @@ SceVoid storageMenu(SceVoid)
 	vita2d_pvf_draw_textf(font, (490 + vita2d_pvf_text_width(font, 1.1f, "Max size:") + 10), 495, COLOUR_VALUE, 1.1f, getStorageInfo(devices[3], 0));*/
 }
 
+static SceInt wifiPage = 0;
+
+SceVoid wifiMenu(SceVoid)
+{		
+	vita2d_draw_rectangle(345, 50, 615, 494, RGBA8(242, 241, 239, 255));
+	
+	switch(wifiPage)
+	{
+		case 0:
+			if (strcmp(regMgrGetStr("/CONFIG/NET/01/WIFI/", "ssid"), "") != 0)
+			{
+				vita2d_draw_rectangle(360, 65, 585, 80, RGBA8(180, 180, 178, 255));
+				vita2d_draw_rectangle(362, 67, 581, 76, RGBA8(255, 255, 253, 255));
+		
+				vita2d_pvf_draw_text(font, 364, 84, COLOUR_VALUE, 1.1f, "Profile 1:");
+				vita2d_pvf_draw_text(font, 364, 110, COLOUR_SUBJECT, 1.1f, "SSID:");
+				vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "SSID:") + 10), 110, COLOUR_VALUE, 1.1f, "%s %s", regMgrGetStr("/CONFIG/NET/01/WIFI/", "ssid"), 
+					regMgrGetInt("/CONFIG/NET/01/WIFI/", "wifi_security") == 1? "(WEP)" : "(WPA)");
+				vita2d_pvf_draw_text(font, 364, 136, COLOUR_SUBJECT, 1.1f, "Pass:");
+				vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "Pass:") + 10), 136, COLOUR_VALUE, 1.1f, "%s", regMgrGetInt("/CONFIG/NET/01/WIFI/", "wifi_security") == 1? 
+					regMgrGetStr("/CONFIG/NET/01/WIFI/", "wep_key") : regMgrGetStr("/CONFIG/NET/01/WIFI/", "wpa_key"));
+			}
+	
+			if (strcmp(regMgrGetStr("/CONFIG/NET/02/WIFI/", "ssid"), "") != 0)
+			{
+				vita2d_draw_rectangle(360, 163, 585, 80, RGBA8(180, 180, 178, 255));
+				vita2d_draw_rectangle(362, 165, 581, 76, RGBA8(255, 255, 253, 255));
+		
+				vita2d_pvf_draw_text(font, 364, 182, COLOUR_VALUE, 1.1f, "Profile 2:");
+				vita2d_pvf_draw_text(font, 364, 208, COLOUR_SUBJECT, 1.1f, "SSID:");
+				vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "SSID:") + 10), 208, COLOUR_VALUE, 1.1f, "%s %s", regMgrGetStr("/CONFIG/NET/02/WIFI/", "ssid"), 
+					regMgrGetInt("/CONFIG/NET/02/WIFI/", "wifi_security") == 1? "(WEP)" : "(WPA)");
+				vita2d_pvf_draw_text(font, 364, 234, COLOUR_SUBJECT, 1.1f, "Pass:");
+				vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "Pass:") + 10), 234, COLOUR_VALUE, 1.1f, "%s", regMgrGetInt("/CONFIG/NET/02/WIFI/", "wifi_security") == 1? 
+					regMgrGetStr("/CONFIG/NET/02/WIFI/", "wep_key") : regMgrGetStr("/CONFIG/NET/02/WIFI/", "wpa_key"));
+			}
+	
+			if (strcmp(regMgrGetStr("/CONFIG/NET/03/WIFI/", "ssid"), "") != 0)
+			{
+				vita2d_draw_rectangle(360, 261, 585, 80, RGBA8(180, 180, 178, 255));
+				vita2d_draw_rectangle(362, 263, 581, 76, RGBA8(255, 255, 253, 255));
+		
+				vita2d_pvf_draw_text(font, 364, 280, COLOUR_VALUE, 1.1f, "Profile 3:");
+				vita2d_pvf_draw_text(font, 364, 306, COLOUR_SUBJECT, 1.1f, "SSID:");
+				vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "SSID:") + 10), 306, COLOUR_VALUE, 1.1f, "%s %s", regMgrGetStr("/CONFIG/NET/03/WIFI/", "ssid"), 
+					regMgrGetInt("/CONFIG/NET/03/WIFI/", "wifi_security") == 1? "(WEP)" : "(WPA)");
+				vita2d_pvf_draw_text(font, 364, 332, COLOUR_SUBJECT, 1.1f, "Pass:");
+				vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "Pass:") + 10), 332, COLOUR_VALUE, 1.1f, "%s", regMgrGetInt("/CONFIG/NET/03/WIFI/", "wifi_security") == 1? 
+					regMgrGetStr("/CONFIG/NET/03/WIFI/", "wep_key") : regMgrGetStr("/CONFIG/NET/03/WIFI/", "wpa_key"));
+			}
+	
+			if (strcmp(regMgrGetStr("/CONFIG/NET/04/WIFI/", "ssid"), "") != 0)
+			{
+				vita2d_draw_rectangle(360, 359, 585, 80, RGBA8(180, 180, 178, 255));
+				vita2d_draw_rectangle(362, 361, 581, 76, RGBA8(255, 255, 253, 255));
+		
+				vita2d_pvf_draw_text(font, 364, 378, COLOUR_VALUE, 1.1f, "Profile 4:");
+				vita2d_pvf_draw_text(font, 364, 404, COLOUR_SUBJECT, 1.1f, "SSID:");
+				vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "SSID:") + 10), 404, COLOUR_VALUE, 1.1f, "%s %s", regMgrGetStr("/CONFIG/NET/04/WIFI/", "ssid"), 
+					regMgrGetInt("/CONFIG/NET/04/WIFI/", "wifi_security") == 1? "(WEP)" : "(WPA)");
+				vita2d_pvf_draw_text(font, 364, 430, COLOUR_SUBJECT, 1.1f, "Pass:");
+				vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "Pass:") + 10), 430, COLOUR_VALUE, 1.1f, "%s", regMgrGetInt("/CONFIG/NET/04/WIFI/", "wifi_security") == 1? 
+					regMgrGetStr("/CONFIG/NET/04/WIFI/", "wep_key") : regMgrGetStr("/CONFIG/NET/04/WIFI/", "wpa_key"));
+			}
+	
+			if (strcmp(regMgrGetStr("/CONFIG/NET/05/WIFI/", "ssid"), "") != 0)
+			{
+				vita2d_draw_rectangle(360, 457, 585, 80, RGBA8(180, 180, 178, 255));
+				vita2d_draw_rectangle(362, 459, 581, 76, RGBA8(255, 255, 253, 255));
+		
+				vita2d_pvf_draw_text(font, 364, 476, COLOUR_VALUE, 1.1f, "Profile 5:");
+				vita2d_pvf_draw_text(font, 364, 502, COLOUR_SUBJECT, 1.1f, "SSID:");
+				vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "SSID:") + 10), 502, COLOUR_VALUE, 1.1f, "%s %s", regMgrGetStr("/CONFIG/NET/05/WIFI/", "ssid"), 
+					regMgrGetInt("/CONFIG/NET/05/WIFI/", "wifi_security") == 1? "(WEP)" : "(WPA)");
+				vita2d_pvf_draw_text(font, 364, 528, COLOUR_SUBJECT, 1.1f, "Pass:");
+				vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "Pass:") + 10), 528, COLOUR_VALUE, 1.1f, "%s", regMgrGetInt("/CONFIG/NET/05/WIFI/", "wifi_security") == 1? 
+					regMgrGetStr("/CONFIG/NET/05/WIFI/", "wep_key") : regMgrGetStr("/CONFIG/NET/05/WIFI/", "wpa_key"));
+			}
+			break;
+			
+		case 1:
+			if (strcmp(regMgrGetStr("/CONFIG/NET/06/WIFI/", "ssid"), "") != 0)
+			{
+				vita2d_draw_rectangle(360, 65, 585, 80, RGBA8(180, 180, 178, 255));
+				vita2d_draw_rectangle(362, 67, 581, 76, RGBA8(255, 255, 253, 255));
+		
+				vita2d_pvf_draw_text(font, 364, 84, COLOUR_VALUE, 1.1f, "Profile 6:");
+				vita2d_pvf_draw_text(font, 364, 110, COLOUR_SUBJECT, 1.1f, "SSID:");
+				vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "SSID:") + 10), 110, COLOUR_VALUE, 1.1f, "%s %s", regMgrGetStr("/CONFIG/NET/06/WIFI/", "ssid"), 
+					regMgrGetInt("/CONFIG/NET/06/WIFI/", "wifi_security") == 1? "(WEP)" : "(WPA)");
+				vita2d_pvf_draw_text(font, 364, 136, COLOUR_SUBJECT, 1.1f, "Pass:");
+				vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "Pass:") + 10), 136, COLOUR_VALUE, 1.1f, "%s", regMgrGetInt("/CONFIG/NET/06/WIFI/", "wifi_security") == 1? 
+					regMgrGetStr("/CONFIG/NET/06/WIFI/", "wep_key") : regMgrGetStr("/CONFIG/NET/06/WIFI/", "wpa_key"));
+			}
+	
+			if (strcmp(regMgrGetStr("/CONFIG/NET/07/WIFI/", "ssid"), "") != 0)
+			{
+				vita2d_draw_rectangle(360, 163, 585, 80, RGBA8(180, 180, 178, 255));
+				vita2d_draw_rectangle(362, 165, 581, 76, RGBA8(255, 255, 253, 255));
+		
+				vita2d_pvf_draw_text(font, 364, 182, COLOUR_VALUE, 1.1f, "Profile 7:");
+				vita2d_pvf_draw_text(font, 364, 208, COLOUR_SUBJECT, 1.1f, "SSID:");
+				vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "SSID:") + 10), 208, COLOUR_VALUE, 1.1f, "%s %s", regMgrGetStr("/CONFIG/NET/07/WIFI/", "ssid"), 
+					regMgrGetInt("/CONFIG/NET/07/WIFI/", "wifi_security") == 1? "(WEP)" : "(WPA)");
+				vita2d_pvf_draw_text(font, 364, 234, COLOUR_SUBJECT, 1.1f, "Pass:");
+				vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "Pass:") + 10), 234, COLOUR_VALUE, 1.1f, "%s", regMgrGetInt("/CONFIG/NET/07/WIFI/", "wifi_security") == 1? 
+					regMgrGetStr("/CONFIG/NET/07/WIFI/", "wep_key") : regMgrGetStr("/CONFIG/NET/07/WIFI/", "wpa_key"));
+			}
+	
+			if (strcmp(regMgrGetStr("/CONFIG/NET/08/WIFI/", "ssid"), "") != 0)
+			{
+				vita2d_draw_rectangle(360, 261, 585, 80, RGBA8(180, 180, 178, 255));
+				vita2d_draw_rectangle(362, 263, 581, 76, RGBA8(255, 255, 253, 255));
+		
+				vita2d_pvf_draw_text(font, 364, 280, COLOUR_VALUE, 1.1f, "Profile 8:");
+				vita2d_pvf_draw_text(font, 364, 306, COLOUR_SUBJECT, 1.1f, "SSID:");
+				vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "SSID:") + 10), 306, COLOUR_VALUE, 1.1f, "%s %s", regMgrGetStr("/CONFIG/NET/08/WIFI/", "ssid"), 
+					regMgrGetInt("/CONFIG/NET/08/WIFI/", "wifi_security") == 1? "(WEP)" : "(WPA)");
+				vita2d_pvf_draw_text(font, 364, 332, COLOUR_SUBJECT, 1.1f, "Pass:");
+				vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "Pass:") + 10), 332, COLOUR_VALUE, 1.1f, "%s", regMgrGetInt("/CONFIG/NET/08/WIFI/", "wifi_security") == 1? 
+					regMgrGetStr("/CONFIG/NET/08/WIFI/", "wep_key") : regMgrGetStr("/CONFIG/NET/08/WIFI/", "wpa_key"));
+			}
+	
+			if (strcmp(regMgrGetStr("/CONFIG/NET/09/WIFI/", "ssid"), "") != 0)
+			{
+				vita2d_draw_rectangle(360, 359, 585, 80, RGBA8(180, 180, 178, 255));
+				vita2d_draw_rectangle(362, 361, 581, 76, RGBA8(255, 255, 253, 255));
+		
+				vita2d_pvf_draw_text(font, 364, 378, COLOUR_VALUE, 1.1f, "Profile 9:");
+				vita2d_pvf_draw_text(font, 364, 409, COLOUR_SUBJECT, 1.1f, "SSID:");
+				vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "SSID:") + 10), 409, COLOUR_VALUE, 1.1f, "%s %s", regMgrGetStr("/CONFIG/NET/09/WIFI/", "ssid"), 
+					regMgrGetInt("/CONFIG/NET/09/WIFI/", "wifi_security") == 1? "(WEP)" : "(WPA)");
+				vita2d_pvf_draw_text(font, 364, 430, COLOUR_SUBJECT, 1.1f, "Pass:");
+				vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "Pass:") + 10), 430, COLOUR_VALUE, 1.1f, "%s", regMgrGetInt("/CONFIG/NET/09/WIFI/", "wifi_security") == 1? 
+					regMgrGetStr("/CONFIG/NET/09/WIFI/", "wep_key") : regMgrGetStr("/CONFIG/NET/09/WIFI/", "wpa_key"));
+			}
+	
+			if (strcmp(regMgrGetStr("/CONFIG/NET/10/WIFI/", "ssid"), "") != 0)
+			{
+				vita2d_draw_rectangle(360, 457, 585, 80, RGBA8(180, 180, 178, 255));
+				vita2d_draw_rectangle(362, 459, 581, 76, RGBA8(255, 255, 253, 255));
+		
+				vita2d_pvf_draw_text(font, 364, 476, COLOUR_VALUE, 1.1f, "Profile 10:");
+				vita2d_pvf_draw_text(font, 364, 502, COLOUR_SUBJECT, 1.1f, "SSID:");
+				vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "SSID:") + 10), 502, COLOUR_VALUE, 1.1f, "%s %s", regMgrGetStr("/CONFIG/NET/10/WIFI/", "ssid"), 
+					regMgrGetInt("/CONFIG/NET/10/WIFI/", "wifi_security") == 1? "(WEP)" : "(WPA)");
+				vita2d_pvf_draw_text(font, 364, 528, COLOUR_SUBJECT, 1.1f, "Pass:");
+				vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "Pass:") + 10), 528, COLOUR_VALUE, 1.1f, "%s", regMgrGetInt("/CONFIG/NET/10/WIFI/", "wifi_security") == 1? 
+					regMgrGetStr("/CONFIG/NET/10/WIFI/", "wep_key") : regMgrGetStr("/CONFIG/NET/10/WIFI/", "wpa_key"));
+			}
+			break;
+	}
+}
+
 SceVoid miscMenu(SceVoid)
 {		
 	vita2d_pvf_draw_textf(font, (((616 - vita2d_pvf_text_width(font, 1.1f, "Misc Menu")) / 2) + 344), 225, COLOUR_MENU, 1.1f, "Misc Menu");
@@ -200,8 +355,12 @@ SceVoid configMenu(SceVoid)
 	vita2d_pvf_draw_text(font, 364, 425, COLOUR_SUBJECT, 1.1f, "Brightness:");
 	vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "Brightness:") + 10), 425, COLOUR_VALUE, 1.1f, "%d%%", getBrightness());
 	
-	vita2d_pvf_draw_text(font, 364, 465, COLOUR_SUBJECT, 1.1f, "Volume:");
-	vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "Volume:") + 10), 465, COLOUR_VALUE, 1.1f, "%d%%", getVolume());
+	int volume = 0;
+	if (R_SUCCEEDED(sceAVConfigGetSystemVol(&volume)))
+	{
+		vita2d_pvf_draw_text(font, 364, 465, COLOUR_SUBJECT, 1.1f, "Volume:");
+		vita2d_pvf_draw_textf(font, (364 + vita2d_pvf_text_width(font, 1.1f, "Volume:") + 10), 465, COLOUR_VALUE, 1.1f, "%d", volume);
+	}
 }
 
 SceVoid psnMenu(SceVoid)
@@ -232,6 +391,33 @@ static SceInt controls(SceVoid)
 	return 0;
 }
 
+int touchButton(int selection)
+{
+	if (touchCheckIsPressed()) 
+	{
+		if (touchGetX() >= 17 && touchGetX() <= 345 && touchGetY() >= 66 && touchGetY() <= 106)
+			selection = 1;
+		else if (touchGetX() >= 17 && touchGetX() <= 345 && touchGetY() >= 106 && touchGetY() <= 146)
+			selection = 2;
+		else if (touchGetX() >= 17 && touchGetX() <= 345 && touchGetY() >= 146 && touchGetY() <= 186)
+			selection = 3;
+		else if (touchGetX() >= 17 && touchGetX() <= 345 && touchGetY() >= 186 && touchGetY() <= 226)
+			selection = 4;
+		else if (touchGetX() >= 17 && touchGetX() <= 345 && touchGetY() >= 226 && touchGetY() <= 266)
+			selection = 5;
+		else if (touchGetX() >= 17 && touchGetX() <= 345 && touchGetY() >= 266 && touchGetY() <= 306)
+			selection = 6;
+		else if (touchGetX() >= 17 && touchGetX() <= 345 && touchGetY() >= 306 && touchGetY() <= 346)
+			selection = 7;
+		else if (touchGetX() >= 17 && touchGetX() <= 345 && touchGetY() >= 346 && touchGetY() <= 386)
+			selection = 8;
+		else if (touchGetX() >= 17 && touchGetX() <= 345 && touchGetY() >= 386 && touchGetY() <= 426)
+			selection = 9;
+	}
+	
+	return selection;
+}
+
 SceVoid mainMenu(SceVoid)
 {
 	SceInt MenuSelection = 1; // Pretty obvious
@@ -255,12 +441,16 @@ SceVoid mainMenu(SceVoid)
 		vita2d_pvf_draw_textf(font, 25, 132, MenuSelection == 2? COLOUR_MAINMENU_HIGHLIGHT : COLOUR_MAINMENU, 1.1f, "System Information");
 		vita2d_pvf_draw_textf(font, 25, 172, MenuSelection == 3? COLOUR_MAINMENU_HIGHLIGHT : COLOUR_MAINMENU, 1.1f, "Battery Information");
 		vita2d_pvf_draw_textf(font, 25, 212, MenuSelection == 4? COLOUR_MAINMENU_HIGHLIGHT : COLOUR_MAINMENU, 1.1f, "Storage Information");
-		vita2d_pvf_draw_textf(font, 25, 252, MenuSelection == 5? COLOUR_MAINMENU_HIGHLIGHT : COLOUR_MAINMENU, 1.1f, "Miscelleanous");
-		vita2d_pvf_draw_textf(font, 25, 292, MenuSelection == 6? COLOUR_MAINMENU_HIGHLIGHT : COLOUR_MAINMENU, 1.1f, "Config");
-		vita2d_pvf_draw_textf(font, 25, 332, MenuSelection == 7? COLOUR_MAINMENU_HIGHLIGHT : COLOUR_MAINMENU, 1.1f, "PSN");
-		vita2d_pvf_draw_textf(font, 25, 372, MenuSelection == 8? COLOUR_MAINMENU_HIGHLIGHT : COLOUR_MAINMENU, 1.1f, "Exit");
+		vita2d_pvf_draw_textf(font, 25, 252, MenuSelection == 5? COLOUR_MAINMENU_HIGHLIGHT : COLOUR_MAINMENU, 1.1f, "WiFi Profiles");
+		vita2d_pvf_draw_textf(font, 25, 292, MenuSelection == 6? COLOUR_MAINMENU_HIGHLIGHT : COLOUR_MAINMENU, 1.1f, "Miscelleanous");
+		vita2d_pvf_draw_textf(font, 25, 332, MenuSelection == 7? COLOUR_MAINMENU_HIGHLIGHT : COLOUR_MAINMENU, 1.1f, "Config");
+		vita2d_pvf_draw_textf(font, 25, 372, MenuSelection == 8? COLOUR_MAINMENU_HIGHLIGHT : COLOUR_MAINMENU, 1.1f, "PSN");
+		vita2d_pvf_draw_textf(font, 25, 412, MenuSelection == 9? COLOUR_MAINMENU_HIGHLIGHT : COLOUR_MAINMENU, 1.1f, "Exit");
 		
 		controls();
+		touchUpdate();
+		
+		MenuSelection = touchButton(MenuSelection);
 		
 		if(pressed & SCE_CTRL_DOWN)
 			MenuSelection++; //Moves the selector down
@@ -291,18 +481,34 @@ SceVoid mainMenu(SceVoid)
 				break;
 				
 			case 5:
-				miscMenu();
+				wifiMenu();
+				
+				if (pressed & SCE_CTRL_LTRIGGER)
+				{
+					if (wifiPage == 1)
+						wifiPage = 0;
+				}
+				else if (pressed & SCE_CTRL_RTRIGGER)
+				{
+					if ((wifiPage == 0) && (strcmp(regMgrGetStr("/CONFIG/NET/06/WIFI/", "ssid"), "") != 0))
+						wifiPage = 1;
+				}
+				
 				break;
 				
 			case 6:
-				configMenu();
+				miscMenu();
 				break;
 				
 			case 7:
-				psnMenu();
+				configMenu();
 				break;
 				
 			case 8:
+				psnMenu();
+				break;
+				
+			case 9:
 				if ((getEnterButton() == SCE_FALSE) && (pressed & SCE_CTRL_CIRCLE))
 					sceKernelExitProcess(0);
 				else if (pressed & SCE_CTRL_CROSS)
@@ -321,6 +527,7 @@ int main(int argc, char *argv[])
 	sceCompatInitEx(0);
 	sceCompatStart();
 	vita2d_init();
+	initTouch();
 	
 	vita2d_set_clear_color(COLOUR_MENU);
 	

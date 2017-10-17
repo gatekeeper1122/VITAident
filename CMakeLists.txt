@@ -55,6 +55,7 @@ add_executable(${SHORT_NAME}
 	source/main.c
 	source/net.c
 	source/power.c
+	source/touch.c
 	source/utils.c
 )
 
@@ -67,6 +68,7 @@ target_link_libraries(${SHORT_NAME}
 	c
 	SceAppMgr_stub
 	SceAppUtil_stub
+	SceAVConfig_stub
 	SceBtForDriver_stub
 	SceCommonDialog_stub
 	SceCompat_stub
@@ -80,7 +82,9 @@ target_link_libraries(${SHORT_NAME}
 	ScePower_stub
 	ScePvf_stub
 	SceRegistryMgr_stub
+	SceSysconForDriver_stub
 	SceSysmodule_stub 
+	SceTouch_stub 
 	SceUdcd_stub
 	SceUsbstorVStorDriver_stub
 	SceVshBridge_stub
