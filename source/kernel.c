@@ -77,9 +77,9 @@ SceKernelOpenPsId getPSID(SceVoid)
 
 char * getUnit(SceVoid)
 {
-	if ((vshSblAimgrIsGenuineVITA() | vshSblAimgrIsGenuineDolce()) && (vshSblAimgrIsCEX()))
+	if ((vshSblAimgrIsGenuineVITA() | sceKernelIsPSVitaTV()) && (vshSblAimgrIsCEX()))
 		return "CEX unit";
-	else if ((vshSblAimgrIsGenuineVITA() | vshSblAimgrIsGenuineDolce()) && (vshSblAimgrIsCEX()) && (vshSysconIsIduMode()))
+	else if ((vshSblAimgrIsGenuineVITA() | sceKernelIsPSVitaTV()) && (vshSblAimgrIsCEX()) && (vshSysconIsIduMode()))
 		return "CEX | IDU unit";
 	else if ((vshSblAimgrIsTest()) && (vshSysconIsShowMode()))
 		return "Devkit | Show unit";

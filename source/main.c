@@ -1,9 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <psp2/compat.h>
-#include <psp2kern/bt.h>
-
 #include "app.h"
 #include "fs.h"
 #include "kernel.h"
